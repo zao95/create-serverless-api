@@ -16,12 +16,12 @@
     "homepage": "https://github.com/zao95/Create-Serverless-API#readme",
     "license": "MIT License",
     "author": {
-        "name": "Lee Jeong-woo",
+        "name": "Lee Jeongwoo",
         "email": "awmaker@kakao.com",
         "url": "https://portfolio.awmaker.com"
     },
     "contributors": [
-        "Lim Jae-young"
+        "Lim Jaeyoung"
     ],
     "main": "cdk.json",
     "files": [
