@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "es2020",
+        "moduleResolution": "node",
+        "lib": ["es2017", "esnext.asynciterable"],
+        "emitDeclarationOnly": true,
+        "declaration": true,
+        "pretty": true,
+        "sourceMap": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitReturns": true,
+        "experimentalDecorators": true
+    }
+}

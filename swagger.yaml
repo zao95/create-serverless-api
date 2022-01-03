@@ -1,0 +1,33 @@
+swagger: '2.0'
+
+info:
+    version: '1.0'
+    title: 'Hello World API'
+
+# Please refer to the guide below for swagger grammar.
+# https://swagger.io/docs/specification/2-0/basic-structure/
+
+paths:
+    # /:
+    #     get:
+    #         x-cdk-lambda-code: ./dist/index # The name of the folder that will go up on Lambda.
+    #         x-cdk-lambda-handler: ./API/users/index.handler # Handler file and function that are called when lambda is executed.
+    #         x-cdk-lambda-name: getCake # The name of the api.
+    #         description: Bring the cakes. # Description of api.
+    #         produces:
+    #             - application/json
+    #         parameters:
+    #             - in: query
+    #               name: count
+    #               required: false # If true, examine the api request and return the error if it does not match.
+    #               type: integer
+    #               description: The number of cakes to bring.
+    #         responses:
+    #             200:
+    #                 description: Brought the cakes safely.
+    #                 schema:
+    #                     type: object
+    #             400:
+    #                 description: Oops, dropped the cakes.
+    #                 schema:
+    #                     type: object
