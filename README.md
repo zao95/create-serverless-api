@@ -1,7 +1,12 @@
-# Create-Serverless-API
+# Create Serverless API
 
 It is an aws serverless-based backend api template created for beginners.
+
 You can service api without knowing the cloud infrastructure.
+
+And Create Serverless API works on macOS, Windows, and Linux.
+
+Create Serverless API was inspired by the [create-react-app](https://github.com/facebook/create-react-app).
 
 ## 🚀Quick Overview
 
@@ -11,11 +16,11 @@ You can service api without knowing the cloud infrastructure.
 
 3.  Execute below commands
 
-```
-npm i
-npm run bootstrap
-npm run deploy
-```
+    ```
+    npm i
+    npm run bootstrap
+    npm run deploy
+    ```
 
 4.  Check the api endpoint output to the terminal.
 
@@ -32,7 +37,7 @@ For detail, please refer to the explanation below.
 
 ## Basic Environment
 
-✅ You can customize this.
+    ✅ You can customize this.
 
 -   Node 14.x
 
@@ -102,7 +107,7 @@ For detail, please refer to the explanation below.
     npm run offline
     ```
 
--   Destroy the apis
+-   Destroy the api
 
     ```
     // Development
@@ -111,6 +116,16 @@ For detail, please refer to the explanation below.
     // Production
     npm run destroy-prod
     ```
+
+## 👏 Contributing
+
+Pull requests and 🌟 stars are always welcome.
+
+For major changes, please [open an issue](https://github.com/zao95/create-serverless-api/issues/new) first to discuss what you would like to change.
+
+## 📩 Contact
+
+awmaker@kakao.com
 
 ## Others
 

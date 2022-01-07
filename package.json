@@ -1,20 +1,23 @@
 {
     "name": "create-serverless-api",
-    "version": "1.0.0",
-    "description": "Create aws serverless api infra through swagger api documentation for beginners.",
+    "version": "0.1.7",
+    "description": "Create aws serverless api infra through OpenAPI Specification for beginners.",
     "keywords": [
         "aws",
         "serverless",
         "node",
+        "javascript",
+        "typescript",
+        "swagger",
         "api",
-        "swagger"
+        "documentation"
     ],
+    "homepage": "https://github.com/zao95/create-serverless-api#readme",
     "repository": {
         "type": "git",
-        "url": "https://github.com/zao95/Create-Serverless-API"
+        "url": "https://github.com/zao95/create-serverless-api"
     },
-    "homepage": "https://github.com/zao95/Create-Serverless-API#readme",
-    "license": "MIT",
+    "license": "MIT License",
     "author": {
         "name": "Lee Jeongwoo",
         "email": "awmaker@kakao.com",
@@ -24,54 +27,27 @@
         "Lim Jaeyoung"
     ],
     "main": "cdk.json",
+    "bin": {
+        "create-serverless-api": "bin/index.js"
+    },
     "files": [
-        "infra",
-        "src",
-        ".babelrc",
-        ".eslintrc.json",
-        ".gitignore",
-        "cdk.json",
-        "install.js",
+        "bin/*",
+        "templates/*",
         "LICENSE",
         "package.json",
-        "README.md",
-        "swagger.yaml",
-        "tsconfig.json"
+        "README.md"
     ],
-    "scripts": {
-        "bootstrap": "npm run build && cross-env INFRA_ENV=development cdk bootstrap --profile development",
-        "bootstrap-prod": "npm run build && cross-env INFRA_ENV=production cdk bootstrap --profile production",
-        "build": "npm run build-infra && npm run build-server",
-        "build-infra": "babel ./infra --out-dir ./infra-dist --extensions \".ts\"",
-        "build-server": "npm run bundle && babel ./dist/temp --out-dir ./dist --extensions \".ts\" && npm run cleanUp",
-        "deploy": "npm run build && cross-env INFRA_ENV=development cdk deploy --require-approval never --profile development",
-        "deploy-prod": "npm run build && cross-env INFRA_ENV=production cdk deploy --require-approval never --profile production",
-        "destroy": "cross-env INFRA_ENV=development cdk destroy --force --profile development",
-        "destroy-prod": "cross-env INFRA_ENV=production cdk destroy --force --profile production",
-        "diff": "npm run build && cross-env INFRA_ENV=development cdk diff --profile development",
-        "diff-prod": "npm run build && cross-env INFRA_ENV=production cdk diff --profile production",
-        "install-dist": "node install.js",
-        "offline": "npm run build-server && set APP_ENV=Offline && node ./dist/entry.js"
-    },
-    "dependencies": {},
-    "devDependencies": {
-        "@aws-cdk/aws-apigateway": "1.134.0",
-        "@aws-cdk/aws-lambda": "1.134.0",
-        "@aws-cdk/aws-route53-targets": "1.134.0",
-        "@aws-cdk/core": "1.134.0",
-        "@babel/cli": "^7.16.0",
-        "@babel/core": "^7.16.0",
-        "@babel/plugin-proposal-class-properties": "^7.16.0",
-        "@babel/plugin-proposal-object-rest-spread": "^7.16.0",
-        "@babel/preset-env": "^7.16.4",
-        "@babel/preset-typescript": "^7.16.0",
-        "@types/aws-lambda": "^8.10.85",
-        "@types/node": "^16.11.11",
-        "aws-cdk": "1.134.0",
-        "core-js": "^3.19.2",
-        "cross-env": "^7.0.3",
-        "swagger-parser": "^10.0.3",
-        "ts-node": "^10.4.0",
-        "typescript": "^4.5.4"
+    "dependencies": {
+        "chalk": "^4.1.2",
+        "commander": "^8.3.0",
+        "cross-spawn": "^7.0.3",
+        "fs-extra": "^10.0.0",
+        "hyperquest": "^2.1.3",
+        "prompts": "^2.4.2",
+        "semver": "^7.3.5",
+        "tar": "^4.4.18",
+        "tar-pack": "^3.4.1",
+        "tmp": "^0.2.1",
+        "validate-npm-package-name": "^3.0.0"
     }
 }
