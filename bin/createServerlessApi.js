@@ -118,26 +118,11 @@ function createApp(name, useYarn) {
         process.exit(1)
     }
 
-    /**
-     * 입력한 "경로/이름"을 기반으로 파악한 절대경로
-     */
     const root = path.resolve(name)
-    /**
-     * 입력한 "경로/이름"을 기반으로 파악한 이름
-     */
     const apiName = path.basename(root)
 
-    /**
-     * npm pacakge name validation
-     */
     checkApiName(apiName)
-    /**
-     * 경로를 체크해서, 없으면 폴더를 만든다.
-     */
     fs.ensureDirSync(name)
-    /**
-     * 설정한 경로 내부에 앞으로 저장될 파일이 있는 지 체크
-     */
     if (!isSafeToCreateProjectIn(root, name)) {
         process.exit(1)
     }
@@ -146,14 +131,6 @@ function createApp(name, useYarn) {
     console.log(`Creating a new Serverless API in ${chalk.green(root)}.`)
     console.log()
 
-    /**
-     * Major version: 0
-     * Minor version: 1
-     * Patch version: 0
-     */
-    /**
-     * Package.json 생성
-     */
     const packageJson = { name: apiName }
     fs.writeFileSync(
         path.join(root, 'package.json'),
@@ -263,6 +240,16 @@ function run(root, apiName, useYarn) {
         .then(async ({ templateInfo }) => {
             const templateName = templateInfo.name
 
+            const srcDir = `../templates`
+            const destDir = `path/to/destination/directory`
+
+            fse.copySync(srcDir, destDir, function (err) {
+                if (err) {
+                    console.error(err)
+                } else {
+                    console.log('success!')
+                }
+            })
             // await executeNodeScript(
             //     {
             //         cwd: process.cwd(),
@@ -478,13 +465,7 @@ function checkNodeVersion(packageName) {
 }
 
 function checkApiName(apiName) {
-    /**
-     * npm pacakge name validation
-     */
     const validationResult = validateProjectName(apiName)
-    /**
-     * npm의 새로운 이름 기준을 통과하는 지 여부
-     */
     if (!validationResult.validForNewPackages) {
         console.error(
             chalk.red(
@@ -504,9 +485,6 @@ function checkApiName(apiName) {
     }
 
     const dependencies = ['react', 'react-dom', 'react-scripts'].sort()
-    /**
-     * dependencies와 같은 이름을 가졌는 지 체크
-     */
     if (dependencies.includes(apiName)) {
         console.error(
             chalk.red(
