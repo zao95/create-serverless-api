@@ -216,7 +216,6 @@ function run(root, apiName, useYarn) {
 
     Promise.resolve(getPackageInfo(templateToInstall))
         .then((templateInfo) => {
-            console.log('templateToInstall', templateToInstall)
             return checkIfOnline(useYarn).then((isOnline) => ({
                 isOnline,
                 templateInfo,
@@ -240,27 +239,17 @@ function run(root, apiName, useYarn) {
         .then(async ({ templateInfo }) => {
             const templateName = templateInfo.name
 
-            const srcDir = `../templates`
-            const destDir = `path/to/destination/directory`
+            const srcDir = `../templates/${templateName}`
+            const destDir = root
 
-            fse.copySync(srcDir, destDir, function (err) {
-                if (err) {
-                    console.error(err)
-                } else {
-                    console.log('success!')
-                }
-            })
-            // await executeNodeScript(
-            //     {
-            //         cwd: process.cwd(),
-            //         args: nodeArgs,
-            //     },
-            //     [root, apiName, originalDirectory, templateName],
-            //     `
-            //         const init = require('${packageName}/scripts/init.js');
-            //         init.apply(null, JSON.parse(process.argv[1]));
-            //     `
-            // )
+            await fs.copy(
+                srcDir,
+                destDir,
+                {
+                    overwrite: false,
+                },
+                (err) => console.error(err)
+            )
         })
         .catch((reason) => {
             console.log()
