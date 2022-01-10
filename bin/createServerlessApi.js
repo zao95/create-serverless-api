@@ -286,7 +286,6 @@ function run(root, apiName, useYarn) {
                     console.log(`  ${chalk.cyan('npm deploy')}`)
                     console.log()
                     console.log('Happy hacking!')
-                    console.log()
                 })
                 .catch((err) => console.error(err))
         })
