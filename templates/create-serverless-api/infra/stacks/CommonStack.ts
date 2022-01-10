@@ -8,6 +8,7 @@ import {
 import convertSwaggerToCdkRestApiModule from '../modules/convertSwaggerToCdkRestApi'
 import { Runtime } from '@aws-cdk/aws-lambda'
 import { SubnetType } from '@aws-cdk/aws-ec2'
+import { Bucket } from '@aws-cdk/aws-s3'
 
 interface IProps extends StackProps {
     swagger: any
@@ -16,7 +17,8 @@ class CommonStack extends Stack {
     public constructor(scope: App, key: string, props: IProps) {
         super(scope, key, props)
 
-        // const s3Bucket = new s3.Bucket(this, 'my-bucket', {
+        // const slipyBucket = new Bucket(this, 'slipyBucket', {
+        //     bucketName: 'www.slipy.com',
         //     removalPolicy: RemovalPolicy.DESTROY,
         //     autoDeleteObjects: true,
         // })
