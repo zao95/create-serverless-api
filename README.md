@@ -10,21 +10,18 @@ Create Serverless API was inspired by the [create-react-app](https://github.com/
 
 ## 🚀Quick Overview
 
-1.  Click "Use current template" to create a repository.
-
-2.  Setting aws credentials file.
-
-3.  Execute below commands
+    📌 Before we proceed with the work below, you must set [aws credential](#detail-usage)
 
     ```
-    npm i
-    npm run bootstrap
-    npm run deploy
+    npx create-serverless-api my-api
+    cd my-api
+    npm bootstrap
+    npm deploy
     ```
 
-4.  Check the api endpoint output to the terminal.
+And Check the api endpoint output to the terminal.
 
-5.  You will have a fully operational api service.
+You will have a fully operational api service.
 
 For detail, please refer to the explanation below.
 
