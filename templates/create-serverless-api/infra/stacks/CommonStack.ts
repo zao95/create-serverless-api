@@ -1,4 +1,4 @@
-import { App, Stack, StackProps } from '@aws-cdk/core'
+import { App, RemovalPolicy, Stack, StackProps } from '@aws-cdk/core'
 import {
     Cors,
     EndpointType,
@@ -9,12 +9,17 @@ import convertSwaggerToCdkRestApiModule from '../modules/convertSwaggerToCdkRest
 import { Runtime } from '@aws-cdk/aws-lambda'
 import { SubnetType } from '@aws-cdk/aws-ec2'
 
-interface props extends StackProps {
+interface IProps extends StackProps {
     swagger: any
 }
 class CommonStack extends Stack {
-    public constructor(scope: App, key: string, props?: props) {
+    public constructor(scope: App, key: string, props: IProps) {
         super(scope, key, props)
+
+        // const s3Bucket = new s3.Bucket(this, 'my-bucket', {
+        //     removalPolicy: RemovalPolicy.DESTROY,
+        //     autoDeleteObjects: true,
+        // })
 
         const slipyApiGateway = new RestApi(this, 'slipyCdkApiGateway', {
             restApiName: 'Slipy_API_Gataway',
@@ -30,7 +35,7 @@ class CommonStack extends Stack {
                 description: `stage in ${process.env.INFRA_ENV} environment`,
                 variables: {
                     APP_ENV: process.env.INFRA_ENV,
-                },
+                } as { [key: string]: any },
                 tracingEnabled: true, // X-Ray enable
                 dataTraceEnabled: true, // CloudWatch log enable
                 loggingLevel: MethodLoggingLevel.INFO, // CloudWatch logging level
