@@ -239,17 +239,56 @@ function run(root, apiName, useYarn) {
         .then(async ({ templateInfo }) => {
             const templateName = templateInfo.name
 
-            const srcDir = `../templates/${templateName}`
+            const currentDirectory = path.dirname(fs.realpathSync(__filename))
+            const rootDirectory = currentDirectory.replace(/\\bin$|\/bin$/, '')
+
+            const srcDir = path.resolve(
+                `${rootDirectory}/templates/${templateName}`
+            )
             const destDir = root
 
-            await fs.copy(
-                srcDir,
-                destDir,
-                {
-                    overwrite: false,
-                },
-                (err) => console.error(err)
-            )
+            fs.copy(srcDir, destDir, {
+                overwrite: false,
+            })
+                .then(() => {
+                    console.log()
+                    console.log(`Success! Created ${apiName} at ${destDir}`)
+                    console.log(
+                        'Inside that directory, you can run several commands:'
+                    )
+                    console.log()
+                    console.log(` ${chalk.cyan('npm run bootstrap')}`)
+                    console.log(
+                        `    Before deployment, deploy a stack for cdk toolkit in an aws environment.`
+                    )
+                    console.log(`    You just have to run it once.`)
+                    console.log()
+                    console.log(` ${chalk.cyan('npm run deploy')}`)
+                    console.log(`    Distribute api to aws.`)
+                    console.log()
+                    console.log(` ${chalk.cyan('npm run destroy')}`)
+                    console.log(`    Remove the api distributed to aws.`)
+                    console.log()
+                    console.log(` ${chalk.cyan('npm run diff')}`)
+                    console.log(
+                        `    Compare the infrastructure posted on aws with the infrastructure changed on the code.`
+                    )
+                    console.log()
+                    console.log(` ${chalk.cyan('npm run offline')}`)
+                    console.log(
+                        `    You can test api in an offline environment.`
+                    )
+                    console.log()
+                    console.log(`We suggest that you begin by typing:`)
+                    console.log()
+                    console.log(`  ${chalk.cyan('cd')} ${apiName}`)
+                    console.log(`  ${chalk.cyan('npm bootstrap')}`)
+                    console.log(`  ${chalk.cyan('npm deploy')}`)
+                    console.log()
+                    console.log('Happy hacking!')
+                    console.log()
+                })
+                .catch((err) => console.error(err))
         })
         .catch((reason) => {
             console.log()
