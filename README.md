@@ -82,13 +82,13 @@ For detail, please refer to the explanation below.
 
 4.  Creating an API
 
-<p align='center'>
-<img src='http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.png' width='600' alt='npx create-serverless-api my-api'>
-</p>
-
     ```
     npx create-serverless-api my-api
     ```
+
+<p align='center'>
+<img src='http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.png' width='600' alt='npx create-serverless-api my-api'>
+</p>
 
 5.  Bootstrap for aws deployment.
 
