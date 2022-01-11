@@ -1,5 +1,7 @@
 # Create Serverless API
 
+Create Serverless APIs with no infra configuration.
+
 It is an aws serverless-based backend api template created for beginners.
 
 You can service api without knowing the cloud infrastructure.
@@ -10,7 +12,7 @@ Create Serverless API was inspired by the [create-react-app](https://github.com/
 
 ## 🚀Quick Overview
 
-    📌 Before we proceed with the work below, you must set [aws credential](#detail-usage)
+📌 Before we proceed with the work below, you must set [aws credential](#detail-usage)
 
     ```
     npx create-serverless-api my-api
@@ -19,22 +21,36 @@ Create Serverless API was inspired by the [create-react-app](https://github.com/
     npm deploy
     ```
 
+![Install example image](http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.png)
+
 And Check the api endpoint output to the terminal.
 
 You will have a fully operational api service.
 
 For detail, please refer to the explanation below.
 
-## Feature
+## ✨Feature
+
+It is a feature that beginners can easily see.
+
+Please look at "[Detail Feature](#detail-feature)" below to see the details.
+
+-
+
+### Detail Feature
+
+The contents below roughly say that this library is very cool.
 
 -   Creating an api document creates an aws infrastructure with a serverless structure.
 -   Optimization due to install necessary libraries by API.
 -   Enable import Syntax and typescript using the Babel.
 -   Sets up local environment similar to the aws lambda.
+-   IaC
+-   FaaS
 
 ## Basic Environment
 
-    ✅ You can customize this.
+✅ You can customize this.
 
 -   Node 14.x
 
