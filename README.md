@@ -21,8 +21,6 @@ Create Serverless API was inspired by the [create-react-app](https://github.com/
     npm deploy
     ```
 
-![Install example image](http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.png)
-
 And Check the api endpoint output to the terminal.
 
 You will have a fully operational api service.
@@ -31,22 +29,18 @@ For detail, please refer to the explanation below.
 
 ## ✨Feature
 
-It is a feature that beginners can easily see.
-
-Please look at "[Detail Feature](#detail-feature)" below to see the details.
-
--
+-   Automatic aws infrastructure completion through documents in the OpenAPI specification.
+-   Install only essential packages for each API.
 
 ### Detail Feature
 
-The contents below roughly say that this library is very cool.
+✨ The detail feature roughly say that this package is very cool.
 
--   Creating an api document creates an aws infrastructure with a serverless structure.
--   Optimization due to install necessary libraries by API.
--   Enable import Syntax and typescript using the Babel.
--   Sets up local environment similar to the aws lambda.
--   IaC
--   FaaS
+-   Infrastructure distribution through IaC makes it easy to modify.
+-   Using FaaS, monitoring is easy and stability can be obtained by horizontal expansion.
+-   Supports monitoring and logging with aws X-ray and aws CloudWatch.
+-   Babel settings are set for using typescript.
+-   Can execute local test similar to the aws lambda.
 
 ## Basic Environment
 
@@ -55,6 +49,10 @@ The contents below roughly say that this library is very cool.
 -   Node 14.x
 
 ## Detail Usage
+
+1. Install
+
+![Install example image](http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.png)
 
 -   ⚠ Caution
     Following this usage, your api will be serviced as a cloud service.
