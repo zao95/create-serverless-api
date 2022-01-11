@@ -87,10 +87,20 @@ For detail, please refer to the explanation below.
     ```
 
 <p align='center'>
-<img src='http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.gif' width='600' alt='npx create-serverless-api my-api'>
+<img src='http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/creating_an_api.gif' width='600' alt='npx create-serverless-api my-api'>
 </p>
 
-5.  Bootstrap for aws deployment.
+5.  Go the project directory.
+
+    ```
+    cd my-api
+    ```
+
+<p align='center'>
+<img src='http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/go_the_project_directory.gif' width='600' alt='npx create-serverless-api my-api'>
+</p>
+
+6.  Bootstrap for aws deployment.
 
     ```
     // Development
@@ -100,7 +110,7 @@ For detail, please refer to the explanation below.
     npm run bootstrap-prod
     ```
 
-6.  Deploy to aws
+7.  Deploy to aws
 
     ✅ The api is served on the address output to the terminal, **so make sure to save it**.
 
