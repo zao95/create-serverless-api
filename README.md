@@ -42,17 +42,13 @@ For detail, please refer to the explanation below.
 -   Babel settings are set for using typescript.
 -   Can execute local test similar to the aws lambda.
 
-## Basic Environment
+## Environment in Lambda Container
 
 ✅ You can customize this.
 
 -   Node 14.x
 
 ## Detail Usage
-
-1. Install
-
-![Install example image](http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.png)
 
 -   ⚠ Caution
     Following this usage, your api will be serviced as a cloud service.
@@ -84,10 +80,14 @@ For detail, please refer to the explanation below.
 
     📌 If you want to change the name, please change it with the script of package.json
 
-4.  nodeJS modules install
+4.  Creating an API
+
+<p align='center'>
+<img src='http://create-serverless-api.s3-website.ap-northeast-2.amazonaws.com/cli_initialize.png' width='600' alt='npx create-serverless-api my-api'>
+</p>
 
     ```
-    npm i
+    npx create-serverless-api my-api
     ```
 
 5.  Bootstrap for aws deployment.
