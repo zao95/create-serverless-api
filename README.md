@@ -34,7 +34,7 @@ For detail, please refer to the explanation below.
 
 ### Detail Feature
 
-✨ The detail feature roughly say that this package is very cool.
+👍 The detail feature roughly say that this package is very cool.
 
 -   Infrastructure distribution through IaC makes it easy to modify.
 -   Using FaaS, monitoring is easy and stability can be obtained by horizontal expansion.
