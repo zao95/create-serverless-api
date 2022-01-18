@@ -47,7 +47,7 @@ class CommonStack extends Stack {
         })
         convertSwaggerToCdkRestApiModule(
             this,
-            'slipy',
+            props.swagger.info.title,
             slipyApiGateway,
             props.swagger,
             {
