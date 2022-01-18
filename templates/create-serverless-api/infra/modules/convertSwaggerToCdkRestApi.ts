@@ -16,7 +16,7 @@ import {
 const changeToUppercaseFirstLetter = (strings: string): string => {
     return strings
         .replace(/\{|\}/g, '')
-        .split('/')
+        .split(/\/|\_/)
         .map(
             (string) =>
                 string.slice(0, 1).toUpperCase() +
