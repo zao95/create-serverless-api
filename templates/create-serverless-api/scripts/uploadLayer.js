@@ -8,7 +8,7 @@ const uploadLayer = async () => {
 	console.info('get stored Layers...')
 	const s3 = new AWS.S3()
 	const params = {
-		Bucket: 'test-tlqkf2'
+		Bucket: 'test-bucket'
 	}
 
 	const objectList = await s3.listObjects(params).promise()
