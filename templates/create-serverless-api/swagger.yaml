@@ -1,33 +1,28 @@
-swagger: '2.0'
+swagger: "2.0"
 
 info:
-    version: '1.0'
-    title: 'Hello World API'
+  version: "1.0"
+  title: "projectCake"
+  x-cdk-s3-bucket-name: "projectCakeLayers"
 
-# Please refer to the guide below for swagger grammar.
-# https://swagger.io/docs/specification/2-0/basic-structure/
+# basePath: /v2
 
 paths:
-    # /:
-    #     get:
-    #         x-cdk-lambda-code: ./dist/index # The name of the folder that will go up on Lambda.
-    #         x-cdk-lambda-handler: ./API/users/index.handler # Handler file and function that are called when lambda is executed.
-    #         x-cdk-lambda-name: getCake # The name of the api.
-    #         description: Bring the cakes. # Description of api.
-    #         produces:
-    #             - application/json
-    #         parameters:
-    #             - in: query
-    #               name: count
-    #               required: false # If true, examine the api request and return the error if it does not match.
-    #               type: integer
-    #               description: The number of cakes to bring.
-    #         responses:
-    #             200:
-    #                 description: Brought the cakes safely.
-    #                 schema:
-    #                     type: object
-    #             400:
-    #                 description: Oops, dropped the cakes.
-    #                 schema:
-    #                     type: object
+  /:
+    get:
+      x-cdk-lambda-handler: ./example.handler # handler path
+      # x-cdk-additional-library: [md5]
+      description: Returns a greeting to the user!
+      produces:
+        - application/json
+      # parameters:
+      # - in: query
+      #   name: test
+      #   required: true
+      #   type: integer
+      #   description: The test
+      responses:
+        200:
+          description: Returns the greeting.
+          schema:
+            type: object
