@@ -8,11 +8,11 @@ info:
 # basePath: /v2
 
 paths:
-  /:
+  /cake:
     get:
-      x-cdk-lambda-handler: ./example.handler # handler path
+      x-cdk-lambda-handler: ./getCake.handler # handler path
       # x-cdk-additional-library: [md5]
-      description: Returns a greeting to the user!
+      description: i get existing cake. cake party!
       produces:
         - application/json
       # parameters:
@@ -23,6 +23,23 @@ paths:
       #   description: The test
       responses:
         200:
-          description: Returns the greeting.
+          description: Returns the cake!
+          schema:
+            type: object
+  /cake:
+    post:
+      x-cdk-lambda-handler: ./makeCake.handler # handler path
+      description: i make a cake. now!
+      produces:
+        - application/json
+      # parameters:
+      # - in: query
+      #   name: test
+      #   required: true
+      #   type: integer
+      #   description: The test
+      responses:
+        200:
+          description: make cake!
           schema:
             type: object
