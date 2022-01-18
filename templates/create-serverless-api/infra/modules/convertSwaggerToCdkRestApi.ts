@@ -12,31 +12,11 @@ import {
     FunctionProps,
     Runtime,
 } from '@aws-cdk/aws-lambda'
-
-const changeToUppercaseFirstLetter = (strings: string): string => {
-    return strings
-        .replace(/\{|\}/g, '')
-        .split(/\/|\_/)
-        .map(
-            (string) =>
-                string.slice(0, 1).toUpperCase() +
-                string.slice(1, string.length)
-        )
-        .join('')
-}
-
-const getParameterType = (swaggerIn: string): string => {
-    if (swaggerIn === 'query') return 'querystring'
-    else if (swaggerIn === 'path') return 'path'
-    else if (swaggerIn === 'header') return 'header'
-    else if (swaggerIn === 'body') return 'body'
-    else
-        throw new Error(
-            `요청하신 api parameter 종류인 ${swaggerIn}을 찾을 수 없습니다.`
-        )
-}
-
-const isEmpty = (param: Object) => Object.keys(param).length === 0
+import {
+    changeToUppercaseFirstLetter,
+    getParameterType,
+    isEmpty,
+} from '../utils/utils'
 
 const jsonSchemaTypeDictionary: any = {
     array: JsonSchemaType.ARRAY,
