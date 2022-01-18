@@ -5,7 +5,13 @@ import {
     JsonSchemaType,
     RequestValidator,
 } from '@aws-cdk/aws-apigateway'
-import { Function, Code, Tracing } from '@aws-cdk/aws-lambda'
+import {
+    Function,
+    Code,
+    Tracing,
+    FunctionProps,
+    Runtime,
+} from '@aws-cdk/aws-lambda'
 
 const changeToUppercaseFirstLetter = (strings: string): string => {
     return strings
@@ -30,9 +36,9 @@ const getParameterType = (swaggerIn: string): string => {
         )
 }
 
-const isEmpty = (param) => Object.keys(param).length === 0
+const isEmpty = (param: Object) => Object.keys(param).length === 0
 
-const jsonSchemaTypeDictionary = {
+const jsonSchemaTypeDictionary: any = {
     array: JsonSchemaType.ARRAY,
     boolean: JsonSchemaType.BOOLEAN,
     integer: JsonSchemaType.INTEGER,
@@ -41,43 +47,10 @@ const jsonSchemaTypeDictionary = {
     object: JsonSchemaType.OBJECT,
     string: JsonSchemaType.STRING,
 }
-
-interface ILambdaProps {
-    runtime
-    allowAllOutbound?
-    allowPublicSubnet?
-    codeSigningConfig?
-    currentVersionOptions?
-    deadLetterQueue?
-    deadLetterQueueEnabled?
-    description?
-    environment?
-    environmentEncryption?
-    events?
-    filesystem?
-    functionName?
-    initialPolicy?
-    layers?
-    logRetention?
-    logRetentionRetryOptions?
-    logRetentionRole?
-    maxEventAge?
-    memorySize?
-    onFailure?
-    onSuccess?
-    profiling?
-    profilingGroup?
-    reservedConcurrentExecutions?
-    retryAttempts?
-    role?
-    securityGroup?
-    securityGroups?
-    timeout?
-    tracing?
-    vpc?
-    vpcSubnets?
-    key?
+interface ILambdaProps extends Omit<FunctionProps, 'code' | 'handler'> {
+    key: string
 }
+
 const convertSwaggerToCdkRestApi = (
     scope: Construct,
     lambdaName: string,
@@ -100,6 +73,7 @@ const convertSwaggerToCdkRestApi = (
             const lambda: Function = new Function(scope, lambdaId, {
                 functionName: lambdaId,
                 description: apiData['description'],
+                runtime: Runtime.NODEJS_14_X,
                 code: Code.fromAsset(apiData['x-cdk-lambda-code']),
                 handler: apiData['x-cdk-lambda-handler'],
                 tracing: Tracing.ACTIVE,

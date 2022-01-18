@@ -56,7 +56,7 @@ class CommonStack extends Stack {
                 allowPublicSubnet: true,
                 environment: {
                     APP_ENV: process.env.INFRA_ENV,
-                },
+                } as { [key: string]: string },
                 vpcSubnets: {
                     subnetType: SubnetType.PUBLIC,
                 },
