@@ -118,7 +118,7 @@ const bundle = async () => {
 			await fs.mkdir(nodePath, { recursive: true })
 			await fs.writeFile(path.join(nodePath, 'blank.json'), 'blank')
 		}
-		await exec(`cd ${layerCasePath} && zip ../${layerCaseName}.zip node/*`)
+		await exec(`cd ${layerCasePath} && tar.exe -a -c -f ../${layerCaseName}.zip node/*`)
 		await fs.rm(layerCasePath, { force: true, recursive: true })
 	}
 
