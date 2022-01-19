@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   version: "1.0"
   title: "projectCake"
-  x-cdk-s3-bucket-name: "project-cake-layers"
+  x-cdk-s3-bucket-name: "project-cake-layers2222222"
 
 # basePath: /v2
 
@@ -24,21 +24,5 @@ paths:
       responses:
         200:
           description: Returns the cake!
-          schema:
-            type: object
-    post:
-      x-cdk-lambda-handler: ./makeCake.handler # handler path
-      description: i make a cake. now!
-      produces:
-        - application/json
-      # parameters:
-      # - in: query
-      #   name: test
-      #   required: true
-      #   type: integer
-      #   description: The test
-      responses:
-        200:
-          description: make cake!
           schema:
             type: object
