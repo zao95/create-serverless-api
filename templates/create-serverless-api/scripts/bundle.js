@@ -81,7 +81,6 @@ const bundle = async () => {
 			delete commonDependencies[libraryName]
 		}
 	}
-	// 레이어 올릴 라이브러리 구분
 
 	console.info('gen layerList...')
 	const libraryCase = []
@@ -109,6 +108,15 @@ const bundle = async () => {
 		for (const libraryName in useDependencies){
 			const version = useDependencies[libraryName]
 			await exec(`npm i --prefix ${modulesPath} ${libraryName}@${version}`)
+		}
+
+		const nodePath = path.join(layerCasePath, 'node')
+		const fileCnt = (await fs.readdir(nodePath)).length
+		
+		if(fileCnt===0){
+			const nodePath = path.join(layerCasePath, 'node')
+			await fs.mkdir(nodePath, { recursive: true })
+			await fs.writeFile(path.join(nodePath, 'blank.json'), 'blank')
 		}
 		await exec(`cd ${layerCasePath} && zip ../${layerCaseName}.zip node/*`)
 		await fs.rm(layerCasePath, { force: true, recursive: true })
