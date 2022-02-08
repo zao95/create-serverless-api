@@ -5,7 +5,7 @@ const uploadLayer = async () => {
 	const path = require('path')
 	const fs = require('fs/promises')
 	const AWS = require('aws-sdk')
-	const layerListPath = path.join(__dirname, '../dist/layerList')
+	const layersPath = path.join(__dirname, '../dist/layers')
 
 	const { info } = await SwaggerParser.parse(path.join(__dirname, '../swagger.yaml'))
 	const Bucket = info['x-cdk-s3-bucket-name']
@@ -26,7 +26,7 @@ const uploadLayer = async () => {
 	console.info('compare new Layers...')
 	const unuseLibraryTable = { ...s3LibraryTable }
 	const addLibraryList = []
-	const localLibraryList = (await fs.readdir(layerListPath))
+	const localLibraryList = (await fs.readdir(layersPath))
 	localLibraryList.forEach(libraryName => {
 		if(unuseLibraryTable[libraryName]){
 			delete unuseLibraryTable[libraryName]
@@ -42,7 +42,7 @@ const uploadLayer = async () => {
 
 	console.info('save new Layers...')
 	for (const libraryName of addLibraryList){
-		const file = await fs.readFile(path.join(layerListPath, libraryName))
+		const file = await fs.readFile(path.join(layersPath, libraryName))
 		await s3.upload({ Bucket, Key: libraryName, Body: file }).promise()
 	}
 }
