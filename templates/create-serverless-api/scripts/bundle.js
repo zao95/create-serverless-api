@@ -41,7 +41,7 @@ const extractLambdaInfos = async (swagger) => {
 			const lambdaName = title.concat(method.replace(/[a-z]/, letter => letter.toUpperCase()), uris.join(''))
 			const additionalLibrary = info['x-cdk-additional-library'] || []
 			
-			const handler = path.join(srcPath, 'API', info['x-cdk-lambda-handler'])
+			const handler = path.join(srcPath, info['x-cdk-lambda-handler'])
 			const handlerPath = handler.replace(path.extname(handler), '.ts')
 
 			lambdaInfos[lambdaName] = { additionalLibrary, handlerPath }
