@@ -5,7 +5,7 @@ import {
     MethodLoggingLevel,
     RestApi,
 } from '@aws-cdk/aws-apigateway'
-import convertSwaggerToCdkRestApiModule from '../modules/convertSwaggerToCdkRestApi'
+import convertSwaggerToRestApiModule from '../modules/convertSwaggerToRestApi'
 import { LayerVersion, Runtime, S3Code } from '@aws-cdk/aws-lambda'
 import { SubnetType } from '@aws-cdk/aws-ec2'
 import { Bucket } from '@aws-cdk/aws-s3'
@@ -26,26 +26,32 @@ class CommonStack extends Stack {
             autoDeleteObjects: true,
         })
 
-        // const layers = JSON.parse(
-        //     fs.readFileSync(join(process.cwd(), '/layers.json'), {
-        //         encoding: 'utf-8',
-        //     })
-        // )
-        // for (const layer in layers) {
-        //     console.log('bucket: ', bucket)
-        //     console.log('route: ', `${layers[layer]}.zip`)
-        //     new LayerVersion(
-        //         this,
-        //         `${props.swagger.info.title}Layer-${layer}`,
-        //         {
-        //             code: new S3Code(bucket, `${layers[layer]}.zip`),
-        //             compatibleRuntimes: [
-        //                 Runtime.NODEJS_12_X,
-        //                 Runtime.NODEJS_14_X,
-        //             ],
-        //         }
-        //     )
-        // }
+        const layersByLambda = JSON.parse(
+            fs.readFileSync(join(process.cwd(), '/layers.json'), {
+                encoding: 'utf-8',
+            })
+        )
+        const layerSet = new Set(Object.values(layersByLambda))
+        const layers = new Map()
+        for (const layerName of layerSet) {
+            layers.set(
+                layerName,
+                new LayerVersion(
+                    this,
+                    `${props.swagger.info.title}Layer-${layerName}`,
+                    {
+                        code: new S3Code(bucket, `${layerName}.zip`),
+                        compatibleRuntimes: [
+                            Runtime.NODEJS_12_X,
+                            Runtime.NODEJS_14_X,
+                        ],
+                    }
+                )
+            )
+        }
+        for (const lambdaName in layersByLambda) {
+            layersByLambda[lambdaName] = layers.get(layersByLambda[lambdaName])
+        }
 
         const apiGateway = new RestApi(
             this,
@@ -75,13 +81,12 @@ class CommonStack extends Stack {
                 },
             }
         )
-        convertSwaggerToCdkRestApiModule(
-            this,
-            props.swagger.info.title,
-            apiGateway,
-            bucket,
-            props.swagger,
-            {
+        convertSwaggerToRestApiModule(this, {
+            lambdaName: props.swagger.info.title,
+            apiGateway: apiGateway,
+            swagger: props.swagger,
+            layersByLambda: layersByLambda,
+            lambdaProps: {
                 key: `${props.swagger.info.title}Functions`,
                 runtime: Runtime.NODEJS_14_X,
                 allowPublicSubnet: true,
@@ -91,10 +96,8 @@ class CommonStack extends Stack {
                 vpcSubnets: {
                     subnetType: SubnetType.PUBLIC,
                 },
-                // vpc,
-                // securityGroups: [securityGroup],
-            }
-        )
+            },
+        })
     }
 }
 

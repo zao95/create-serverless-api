@@ -11,6 +11,7 @@ import {
     Tracing,
     FunctionProps,
     Runtime,
+    LayerVersion,
 } from '@aws-cdk/aws-lambda'
 import { Bucket } from '@aws-cdk/aws-s3'
 import {
@@ -32,15 +33,18 @@ interface ILambdaProps extends Omit<FunctionProps, 'code' | 'handler'> {
     key: string
 }
 
-const convertSwaggerToCdkRestApi = (
+interface IProps {
+    lambdaName: string
+    apiGateway: RestApi
+    swagger: any
+    layersByLambda: { [key: string]: LayerVersion }
+    lambdaProps: ILambdaProps
+}
+
+const convertSwaggerToRestApi = (
     scope: Construct,
-    lambdaName: string,
-    apiGateway: RestApi,
-    bucket: Bucket,
-    swagger: any,
-    lambdaProps?: ILambdaProps
+    { lambdaName, apiGateway, swagger, layersByLambda, lambdaProps }: IProps
 ) => {
-    const needGetObjectPermission: string[] = []
     let paths = Object.keys(swagger.paths)
 
     paths.forEach((pathName) => {
@@ -53,13 +57,13 @@ const convertSwaggerToCdkRestApi = (
                 lambdaName +
                 changeToUppercaseFirstLetter(methodName) +
                 (pathName === '/' ? '' : changeToUppercaseFirstLetter(pathName))
-            const lambda: Function = new Function(scope, lambdaId, {
+            const lambda = new Function(scope, lambdaId, {
                 functionName: lambdaId,
                 description: apiData['description'],
-                runtime: Runtime.NODEJS_14_X,
                 code: Code.fromAsset(`./dist/api/${lambdaId}`),
-                handler: `api/${apiData['x-cdk-lambda-handler']}`,
+                handler: apiData['x-cdk-lambda-handler'],
                 tracing: Tracing.ACTIVE,
+                layers: [layersByLambda[lambdaId]],
                 ...lambdaProps,
             })
 
@@ -153,7 +157,6 @@ const convertSwaggerToCdkRestApi = (
             )
         })
     })
-    return needGetObjectPermission
 }
 
-export default convertSwaggerToCdkRestApi
+export default convertSwaggerToRestApi
