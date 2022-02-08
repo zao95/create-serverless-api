@@ -11,7 +11,7 @@ const exec = util.promisify(childProcess.exec)
 const distPath = path.join(__dirname, '../dist')
 const srcPath = path.join(__dirname, '../src')
 const tempPath = path.join(distPath, './temp')
-const layerPath = path.join(distPath, './layerList')
+const layerPath = path.join(distPath, './layers')
 const commonPath = path.join(distPath, './common')
 const commonModulePath = path.join(srcPath, './modules/common.ts')
 
@@ -82,7 +82,7 @@ const bundle = async () => {
 		}
 	}
 
-	console.info('gen layerList...')
+	console.info('gen layers...')
 	const libraryCase = []
 	for (const lambdaName in lambdaInfos){
 		const { additionalLibrary } = lambdaInfos[lambdaName]
@@ -128,7 +128,7 @@ const bundle = async () => {
 		layerJson[lambdaName] = useCase
 	}
 
-	await fs.writeFile(path.join(__dirname, '../layerList.json'), JSON.stringify(layerJson))
+	await fs.writeFile(path.join(__dirname, '../layers.json'), JSON.stringify(layerJson))
 }
 
 const jsonToHash = (string) => 
