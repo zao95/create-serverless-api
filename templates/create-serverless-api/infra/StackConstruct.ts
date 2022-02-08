@@ -9,11 +9,15 @@ class StackConstruct extends Construct {
     constructor(scope: App, id: string, props: props) {
         super(scope, id)
 
-        const CommonStackObj = new CommonStack(scope, setting.stack.key, {
-            env: setting.envKR,
-            swagger: props.swagger,
-        })
-        Tags.of(CommonStackObj).add('project', 'Slipy')
+        const CommonStackObj = new CommonStack(
+            scope,
+            `${props.swagger.info.title}Stack`,
+            {
+                env: setting.envKR,
+                swagger: props.swagger,
+            }
+        )
+        Tags.of(CommonStackObj).add('project', props.swagger.info.title)
     }
 }
 
