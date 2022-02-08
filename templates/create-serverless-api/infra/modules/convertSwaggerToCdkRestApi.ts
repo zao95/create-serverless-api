@@ -58,7 +58,7 @@ const convertSwaggerToCdkRestApi = (
                 description: apiData['description'],
                 runtime: Runtime.NODEJS_14_X,
                 code: Code.fromAsset(`./dist/api/${lambdaId}`),
-                handler: apiData['x-cdk-lambda-handler'],
+                handler: `api/${apiData['x-cdk-lambda-handler']}`,
                 tracing: Tracing.ACTIVE,
                 ...lambdaProps,
             })
