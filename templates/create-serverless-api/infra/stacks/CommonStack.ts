@@ -6,10 +6,12 @@ import {
     RestApi,
 } from '@aws-cdk/aws-apigateway'
 import convertSwaggerToCdkRestApiModule from '../modules/convertSwaggerToCdkRestApi'
-import { Runtime } from '@aws-cdk/aws-lambda'
+import { LayerVersion, Runtime, S3Code } from '@aws-cdk/aws-lambda'
 import { SubnetType } from '@aws-cdk/aws-ec2'
 import { Bucket } from '@aws-cdk/aws-s3'
 import { changeToUppercaseFirstLetter } from '../utils/utils'
+import { join } from 'path'
+import fs from 'fs'
 
 interface IProps extends StackProps {
     swagger: any
@@ -23,6 +25,27 @@ class CommonStack extends Stack {
             removalPolicy: RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
         })
+
+        // const layers = JSON.parse(
+        //     fs.readFileSync(join(process.cwd(), '/layers.json'), {
+        //         encoding: 'utf-8',
+        //     })
+        // )
+        // for (const layer in layers) {
+        //     console.log('bucket: ', bucket)
+        //     console.log('route: ', `${layers[layer]}.zip`)
+        //     new LayerVersion(
+        //         this,
+        //         `${props.swagger.info.title}Layer-${layer}`,
+        //         {
+        //             code: new S3Code(bucket, `${layers[layer]}.zip`),
+        //             compatibleRuntimes: [
+        //                 Runtime.NODEJS_12_X,
+        //                 Runtime.NODEJS_14_X,
+        //             ],
+        //         }
+        //     )
+        // }
 
         const apiGateway = new RestApi(
             this,
