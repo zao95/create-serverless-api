@@ -1,4 +1,4 @@
-/cdk.out
-/dist
-/infra-dist
-/node_modules
+cdk.out
+dist
+infra-dist
+node_modules
