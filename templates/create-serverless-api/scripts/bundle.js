@@ -128,8 +128,7 @@ const bundle = async () => {
 		layerJson[lambdaName] = useCase
 	}
 
-	await fs.writeFile(path.join(distPath, 'layerList.json'), JSON.stringify(layerJson))
-	// console.log(layerJson)
+	await fs.writeFile(path.join(__dirname, '../layerList.json'), JSON.stringify(layerJson))
 }
 
 const jsonToHash = (string) => 
