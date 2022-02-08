@@ -13,7 +13,7 @@ class StackConstruct extends Construct {
             env: setting.envKR,
             swagger: props.swagger,
         })
-        Tags.of(CommonStackObj).add('project', 'Slipy')
+        Tags.of(CommonStackObj).add('project', props.swagger.info.title)
     }
 }
 
