@@ -56,6 +56,7 @@ class CommonStack extends Stack {
             this,
             props.swagger.info.title,
             apiGateway,
+            bucket,
             props.swagger,
             {
                 key: `${props.swagger.info.title}Functions`,

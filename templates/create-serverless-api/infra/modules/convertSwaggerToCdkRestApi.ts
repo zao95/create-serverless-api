@@ -12,6 +12,7 @@ import {
     FunctionProps,
     Runtime,
 } from '@aws-cdk/aws-lambda'
+import { Bucket } from '@aws-cdk/aws-s3'
 import {
     changeToUppercaseFirstLetter,
     getParameterType,
@@ -35,9 +36,11 @@ const convertSwaggerToCdkRestApi = (
     scope: Construct,
     lambdaName: string,
     apiGateway: RestApi,
+    bucket: Bucket,
     swagger: any,
     lambdaProps?: ILambdaProps
 ) => {
+    const needGetObjectPermission: string[] = []
     let paths = Object.keys(swagger.paths)
 
     paths.forEach((pathName) => {
@@ -150,6 +153,7 @@ const convertSwaggerToCdkRestApi = (
             )
         })
     })
+    return needGetObjectPermission
 }
 
 export default convertSwaggerToCdkRestApi

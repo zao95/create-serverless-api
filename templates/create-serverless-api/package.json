@@ -30,7 +30,7 @@
         "@types/aws-lambda": "8.10.85",
         "@types/node": "16.11.11",
         "aws-cdk": "1.134.0",
-        "aws-sdk": "^2.1053.0",
+        "aws-sdk": "2.1053.0",
         "core-js": "3.19.2",
         "cross-env": "7.0.3",
         "swagger-parser": "10.0.3",
