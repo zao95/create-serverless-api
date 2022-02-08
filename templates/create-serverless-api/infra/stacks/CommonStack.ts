@@ -20,11 +20,11 @@ class CommonStack extends Stack {
     public constructor(scope: App, key: string, props: IProps) {
         super(scope, key, props)
 
-        const bucket = new Bucket(this, `${props.swagger.info.title}Bucket`, {
-            bucketName: props.swagger.info['x-cdk-s3-bucket-name'],
-            removalPolicy: RemovalPolicy.DESTROY,
-            autoDeleteObjects: true,
-        })
+        const bucket = Bucket.fromBucketName(
+            this,
+            `${props.swagger.info.title}Bucket`,
+            props.swagger.info['x-cdk-s3-bucket-name']
+        )
 
         const layersByLambda = JSON.parse(
             fs.readFileSync(join(process.cwd(), '/layers.json'), {
