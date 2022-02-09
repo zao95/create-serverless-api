@@ -1,25 +1,6 @@
 const SwaggerParser = require('@apidevtools/swagger-parser')
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
-const spawn = require('child_process').spawn
-
-const execute = async (command) => {
-    return new Promise((resolve, reject) => {
-        ls = spawn(command)
-        ls.stdout.on('data', function (data) {
-            console.log('stdout: ' + data.toString())
-        })
-
-        ls.stderr.on('data', function (data) {
-            console.log('stderr: ' + data.toString())
-            reject(false)
-        })
-        ls.on('exit', function (code) {
-            console.log('child process exited with code ' + code.toString())
-            resolve(true)
-        })
-    })
-}
 
 const executeS3Stack = async () => {
     try {
@@ -29,7 +10,6 @@ const executeS3Stack = async () => {
             const INFRA_ENV = process.env.INFRA_ENV
             const command = `cdk ${cdkCommand} ${stackName} --require-approval never --profile ${INFRA_ENV}`
 
-            // await execute(command)
             const result = await exec(command)
             return result
         })
