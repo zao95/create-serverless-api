@@ -7,6 +7,6 @@ import StackConstruct from './StackConstruct'
 
 SwaggerParser.parse('./swagger.yaml').then((swagger) => {
     const app = new App()
-    new StackConstruct(app, setting.construct.key, { swagger })
+    new StackConstruct(app, `${swagger.info.title}Construct`, { swagger })
     app.synth()
 })
