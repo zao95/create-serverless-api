@@ -2,6 +2,8 @@ const SwaggerParser = require('@apidevtools/swagger-parser')
 const path = require('path')
 const fs = require('fs/promises')
 const AWS = require('aws-sdk')
+const credentials = new AWS.SharedIniFileCredentials({profile: process.env.INFRA_ENV});
+AWS.config.credentials = credentials;
 
 const uploadLayer = async () => {
     try {
