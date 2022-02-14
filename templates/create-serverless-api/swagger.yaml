@@ -1,9 +1,9 @@
-swagger: '2.0'
+swagger: 2.0
 
 info:
-    version: '1.0'
-    title: projectCake
-    x-cdk-s3-bucket-name: project-cake-layers
+    version: 1.0
+    title: projectCakeLimJae
+    x-cdk-s3-bucket-name: project-cake-layers-limjae
 
 # basePath: /v2
 
