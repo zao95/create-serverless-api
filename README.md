@@ -51,6 +51,7 @@ For detail, please refer to the explanation below.
 ## Detail Usage
 
 -   ⚠ Caution
+
     Following this usage, your api will be serviced as a cloud service.
     You spend money according to the amount of api calls.
     **so make sure to check out [AWS Pricing Policy](https://aws.amazon.com/pricing)**.
@@ -112,6 +113,8 @@ For detail, please refer to the explanation below.
     ```
 
 7.  Deploy to aws
+
+    📌 You have to change the **x-cdk-s3-bucket-name** in **Swagger.yaml**'s info to your own unique name.
 
     ✅ The api is served on the address output to the terminal, **so make sure to save it**.
 
