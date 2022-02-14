@@ -7,7 +7,7 @@ const { createHmac } = require('crypto')
 
 const exec = util.promisify(childProcess.exec)
 
-const distPath = path.join(__dirname, '../dist')
+const distPath = path.join(__dirname, '../.serverless/dist')
 const srcPath = path.join(__dirname, '../src')
 const tempPath = path.join(distPath, './temp')
 const layerPath = path.join(distPath, './layers')
@@ -149,7 +149,7 @@ const bundle = async () => {
     }
 
     await fs.writeFile(
-        path.join(__dirname, '../layers.json'),
+        path.join(__dirname, '../.serverless/layers.json'),
         JSON.stringify(layerJson)
     )
 }

@@ -7,7 +7,7 @@ AWS.config.credentials = credentials;
 
 const uploadLayer = async () => {
     try {
-        const layersPath = path.join(__dirname, '../dist/layers')
+        const layersPath = path.join(__dirname, '../.serverless/dist/layers')
 
         const { info } = await SwaggerParser.parse(
             path.join(__dirname, '../swagger.yaml')
