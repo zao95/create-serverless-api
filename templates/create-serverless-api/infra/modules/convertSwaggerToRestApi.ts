@@ -10,10 +10,8 @@ import {
     Code,
     Tracing,
     FunctionProps,
-    Runtime,
     LayerVersion,
 } from '@aws-cdk/aws-lambda'
-import { Bucket } from '@aws-cdk/aws-s3'
 import {
     changeToUppercaseFirstLetter,
     getParameterType,
