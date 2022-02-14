@@ -1,16 +1,33 @@
-swagger: 2.0
+swagger: '2.0'
 
 info:
-    version: 1.0
-    title: projectCakeLimJae
-    x-cdk-s3-bucket-name: project-cake-layers-limjae
+    version: '1.0'
+    title: projectCake
+    x-cdk-s3-bucket-name: project-cake-layers
 
 # basePath: /v2
 
 paths:
-    /cake:
+    /:
         get:
-            x-cdk-lambda-handler: ./api/getCake.handler # handler path
+            x-cdk-lambda-handler: ./api/sample.handler # handler path
+            # x-cdk-additional-library: [md5]
+            description: i get existing cake. cake party!
+            produces:
+                - application/json
+            # parameters:
+            # - in: query
+            #   name: test
+            #   required: true
+            #   type: integer
+            #   description: The test
+            responses:
+                200:
+                    description: Returns the cake!
+                    schema:
+                        type: object
+        post:
+            x-cdk-lambda-handler: ./api/makeCake.handler # handler path
             # x-cdk-additional-library: [md5]
             description: i get existing cake. cake party!
             produces:
