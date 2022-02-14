@@ -27,7 +27,7 @@ class CommonStack extends Stack {
         )
 
         const layersByLambda = JSON.parse(
-            fs.readFileSync(join(process.cwd(), '/layers.json'), {
+            fs.readFileSync(join(__dirname, '../../layers.json'), {
                 encoding: 'utf-8',
             })
         )

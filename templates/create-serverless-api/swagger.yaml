@@ -26,6 +26,24 @@ paths:
                     description: Returns the cake!
                     schema:
                         type: object
+    /cake:
+        get:
+            x-cdk-lambda-handler: ./api/getCake.handler # handler path
+            # x-cdk-additional-library: [md5]
+            description: i get existing cake. cake party!
+            produces:
+                - application/json
+            # parameters:
+            # - in: query
+            #   name: test
+            #   required: true
+            #   type: integer
+            #   description: The test
+            responses:
+                200:
+                    description: Returns the cake!
+                    schema:
+                        type: object
         post:
             x-cdk-lambda-handler: ./api/makeCake.handler # handler path
             # x-cdk-additional-library: [md5]

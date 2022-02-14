@@ -58,7 +58,7 @@ const convertSwaggerToRestApi = (
             const lambda = new Function(scope, lambdaId, {
                 functionName: lambdaId,
                 description: apiData['description'],
-                code: Code.fromAsset(`./dist/api/${lambdaId}`),
+                code: Code.fromAsset(`./.serverless/dist/api/${lambdaId}`),
                 handler: apiData['x-cdk-lambda-handler'],
                 tracing: Tracing.ACTIVE,
                 layers: [layersByLambda[lambdaId]],

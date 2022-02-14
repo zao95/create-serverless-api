@@ -1,5 +1,3 @@
 node_modules/
 cdk.out/
-dist/
-infra-dist/
-layers.json
+.serverless
