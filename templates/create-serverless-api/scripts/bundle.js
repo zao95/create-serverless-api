@@ -11,7 +11,6 @@ const distPath = path.join(__dirname, '../dist')
 const srcPath = path.join(__dirname, '../src')
 const tempPath = path.join(distPath, './temp')
 const layerPath = path.join(distPath, './layers')
-const commonPath = path.join(distPath, './common')
 const commonModulePath = path.join(srcPath, './modules/common.ts')
 
 const extractDependencies = async () => {
@@ -67,7 +66,6 @@ const extractLambdaInfos = async (swagger) => {
 const bundle = async () => {
     await fs.rm(distPath, { recursive: true, force: true })
     await fs.mkdir(layerPath, { recursive: true })
-    await fs.mkdir(commonPath, { recursive: true })
     await fs.mkdir(tempPath, { recursive: true })
 
     const swagger = await SwaggerParser.parse(
