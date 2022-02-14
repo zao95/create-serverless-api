@@ -144,11 +144,21 @@ For detail, please refer to the explanation below.
     ```
     /your-project
     └─src
-      ├─api - Directory where the entry point of your API is saved. The position should be placed in the x-cdk-lambda-handler of swagger.yaml.
+      ├─api
       │ └─...
-      └─modules - A directory that puts the code that we use in common.
+      └─modules
         ├─...
     ```
+
+    -   api
+
+        Directory where the entry point of your API is saved.
+
+        The position should be placed in the x-cdk-lambda-handler of swagger.yaml.
+
+    -   api
+
+        A directory that puts the code that we use in common.
 
 ## 👏 Contributing
 
