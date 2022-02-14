@@ -139,6 +139,17 @@ For detail, please refer to the explanation below.
     npm run destroy-prod
     ```
 
+-   src directory tree description
+
+    ```
+    /your-project
+    └─src
+      ├─api - Directory where the entry point of your API is saved. The position should be placed in the x-cdk-lambda-handler of swagger.yaml.
+      │ └─...
+      └─modules - A directory that puts the code that we use in common.
+        ├─...
+    ```
+
 ## 👏 Contributing
 
 Pull requests and 🌟 stars are always welcome.
