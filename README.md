@@ -66,6 +66,7 @@ For detail, please refer to the explanation below.
 3.  Configurate your aws credentials file
 
     ✅ **Windows** default path: C/Users/{userName}/.aws/credentials
+
     ✅ **Linux** or **macOS** default path: ~/.aws/credentials
 
     ```text
