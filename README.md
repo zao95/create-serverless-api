@@ -169,6 +169,12 @@ Pull requests and 🌟 stars are always welcome.
 
 For major changes, please [open an issue](https://github.com/zao95/create-serverless-api/issues/new) first to discuss what you would like to change.
 
+## 💸 Donate
+
+-   Please buy me coffee so that I can continue to make convenient packages.
+
+    https://www.buymeacoffee.com/awmaker
+
 ## 📩 Contact
 
 awmaker@kakao.com
