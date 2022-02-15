@@ -1,6 +1,6 @@
 {
     "name": "create-serverless-api",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "description": "Create aws serverless api infra through OpenAPI Specification for beginners.",
     "keywords": [
         "aws",
