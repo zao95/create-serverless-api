@@ -114,7 +114,7 @@ For detail, please refer to the explanation below.
 
 7.  Deploy to aws
 
-    📌 You have to change the **x-cdk-s3-bucket-name** in **Swagger.yaml**'s info to your own unique name.
+    📌 You have to change the **x-cdk-s3-bucket-name** in **swagger.yaml**'s info to your own unique name.
 
     ✅ The api is served on the address output to the terminal, **so make sure to save it**.
 
