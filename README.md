@@ -51,6 +51,7 @@ For detail, please refer to the explanation below.
 ## Detail Usage
 
 -   ⚠ Caution
+
     Following this usage, your api will be serviced as a cloud service.
     You spend money according to the amount of api calls.
     **so make sure to check out [AWS Pricing Policy](https://aws.amazon.com/pricing)**.
@@ -113,6 +114,8 @@ For detail, please refer to the explanation below.
 
 7.  Deploy to aws
 
+    📌 You have to change the **x-cdk-s3-bucket-name** in **swagger.yaml**'s info to your own unique name.
+
     ✅ The api is served on the address output to the terminal, **so make sure to save it**.
 
     ```
@@ -139,11 +142,38 @@ For detail, please refer to the explanation below.
     npm run destroy-prod
     ```
 
+-   src directory tree description
+
+    ```
+    /your-project
+    └─src
+      ├─api
+      │ └─...
+      └─modules
+        ├─...
+    ```
+
+    -   api
+
+        Directory where the entry point of your API is saved.
+
+        The position should be placed in the x-cdk-lambda-handler of swagger.yaml.
+
+    -   api
+
+        A directory that puts the code that we use in common.
+
 ## 👏 Contributing
 
 Pull requests and 🌟 stars are always welcome.
 
 For major changes, please [open an issue](https://github.com/zao95/create-serverless-api/issues/new) first to discuss what you would like to change.
+
+## ☕ Donate
+
+-   Please buy me coffee so that I can continue to make convenient packages.
+
+    https://www.buymeacoffee.com/awmaker
 
 ## 📩 Contact
 
