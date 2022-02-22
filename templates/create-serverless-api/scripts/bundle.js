@@ -4,6 +4,7 @@ const childProcess = require('child_process')
 const util = require('util')
 const fs = require('fs/promises')
 const { createHmac } = require('crypto')
+const os = require('os')
 
 const exec = util.promisify(childProcess.exec)
 
@@ -138,8 +139,14 @@ const bundle = async () => {
             await fs.writeFile(path.join(nodePath, 'blank.json'), 'blank')
         }
         const zipPath = path.join(layerPath, `${layerCaseName}.zip`)
+        
+        const platform = os.platform()
+        let zipCommand = 'zip'
+        if(platform==='win32'){
+            zipCommand = 'tar.exe -a -c -f'
+        }
         await exec(
-            `cd ${layerCasePath} && zip ${zipPath} node/*`
+            `cd ${layerCasePath} && ${zipCommand} ${zipPath} node/*`
         )
         await fs.rm(layerCasePath, { force: true, recursive: true })
     }
