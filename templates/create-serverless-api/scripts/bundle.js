@@ -7,15 +7,16 @@ const { createHmac } = require('crypto')
 
 const exec = util.promisify(childProcess.exec)
 
-const distPath = path.join(__dirname, '../.serverless/dist')
-const srcPath = path.join(__dirname, '../src')
-const tempPath = path.join(distPath, './temp')
-const layerPath = path.join(distPath, './layers')
-const commonModulePath = path.join(srcPath, './modules/common.ts')
+const serverlessPath = path.join(process.cwd(), '.serverless')
+const distPath = path.join(serverlessPath, 'dist')
+const srcPath = path.join(process.cwd(), 'src')
+const tempPath = path.join(distPath, 'temp')
+const layerPath = path.join(distPath, 'layers')
+const commonModulePath = path.join(srcPath, 'modules', 'common.ts')
 
 const extractDependencies = async () => {
     const packageJsonData = await fs.readFile(
-        path.join(__dirname, '../package.json')
+        path.join(process.cwd(), 'package.json')
     )
     const packageJson = Buffer.from(packageJsonData).toString('utf-8')
     const packageInfo = JSON.parse(packageJson)
@@ -69,7 +70,7 @@ const bundle = async () => {
     await fs.mkdir(tempPath, { recursive: true })
 
     const swagger = await SwaggerParser.parse(
-        path.join(__dirname, '../swagger.yaml')
+        path.join(process.cwd(), 'swagger.yaml')
     )
 
     const dependencies = await extractDependencies()
@@ -136,8 +137,9 @@ const bundle = async () => {
             await fs.mkdir(nodePath, { recursive: true })
             await fs.writeFile(path.join(nodePath, 'blank.json'), 'blank')
         }
+        const zipPath = path.join(layerPath, `${layerCaseName}.zip`)
         await exec(
-            `cd ${layerCasePath} && tar.exe -a -c -f ../${layerCaseName}.zip node/*`
+            `cd ${layerCasePath} && tar.exe -a -c -f ${zipPath} node/*`
         )
         await fs.rm(layerCasePath, { force: true, recursive: true })
     }
@@ -149,12 +151,12 @@ const bundle = async () => {
     }
 
     await fs.writeFile(
-        path.join(__dirname, '../.serverless/layers.json'),
+        path.join(serverlessPath, 'layers.json'),
         JSON.stringify(layerJson)
     )
 }
 
-const jsonToHash = (string) =>
+const jsonToHash = string =>
     createHmac('sha256', 'library').update(string).digest('hex').slice(0, 20)
 
 const copy = async (src, dest) => {
