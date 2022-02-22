@@ -2,61 +2,45 @@ swagger: '2.0'
 
 info:
     version: '1.0'
-    title: projectCake
+    title: projectFruit # Do not change it after the first deployment.
 
 # basePath: /v2
 
 paths:
     /:
         get:
-            x-cdk-lambda-handler: ./api/sample.handler # handler path
-            # x-cdk-additional-library: [md5]
-            description: i get existing cake. cake party!
+            x-cdk-lambda-handler: ./api/healthCheck.handler # Input your API function path
+            description: Check API health. # Input API description
             produces:
                 - application/json
-            # parameters:
-            # - in: query
-            #   name: test
-            #   required: true
-            #   type: integer
-            #   description: The test
             responses:
                 200:
-                    description: Returns the cake!
+                    description: Returns the API health.
                     schema:
                         type: object
-    /cake:
+    /fruit:
         get:
-            x-cdk-lambda-handler: ./api/getCake.handler # handler path
-            # x-cdk-additional-library: [md5]
-            description: i get existing cake. cake party!
+            x-cdk-lambda-handler: ./api/getFruit.handler
+            x-cdk-additional-library: [md5]
+            description: Take the fruit out of the basket.
             produces:
                 - application/json
-            # parameters:
-            # - in: query
-            #   name: test
-            #   required: true
-            #   type: integer
-            #   description: The test
+            parameters:
+                - in: query
+                  name: fruit
+                  required: true
+                  type: string
+                  description: The fruit you want to bring.
+                - in: query
+                  name: count
+                  type: integer
+                  description: The number you want to bring.
             responses:
                 200:
-                    description: Returns the cake!
+                    description: Returns the fruit!
                     schema:
                         type: object
-        post:
-            x-cdk-lambda-handler: ./api/makeCake.handler # handler path
-            # x-cdk-additional-library: [md5]
-            description: i get existing cake. cake party!
-            produces:
-                - application/json
-            # parameters:
-            # - in: query
-            #   name: test
-            #   required: true
-            #   type: integer
-            #   description: The test
-            responses:
-                200:
-                    description: Returns the cake!
+                400:
+                    description: There are no more fruits in the basket than that much.
                     schema:
                         type: object

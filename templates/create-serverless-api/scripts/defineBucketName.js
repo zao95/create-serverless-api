@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid')
 const { camelCaseToDash } = require('./utils')
 
 const defineBucketName = async () => {
-    const dataPath = path.join(process.cwd(), '/infra/data.json')
+    const dataPath = path.join(process.cwd(), 'infra', 'data.json')
     try {
         await fs.access(dataPath)
     } catch (e) {
@@ -20,7 +20,7 @@ const defineBucketName = async () => {
         }
 
         const swagger = await SwaggerParser.parse(
-            path.join(process.cwd(), '/swagger.yaml')
+            path.join(process.cwd(), 'swagger.yaml')
         )
         try {
             await fs.ensureFile(dataPath)

@@ -11,7 +11,7 @@ class UploadS3Stack extends Stack {
         const bucketName = camelCaseToDash(
             JSON.parse(
                 readFileSync(
-                    path.join(process.cwd(), '/infra/data.json'),
+                    path.join(process.cwd(), 'infra/data.json'),
                     'utf-8'
                 )
             ).bucketName
