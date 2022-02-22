@@ -139,7 +139,7 @@ const bundle = async () => {
         }
         const zipPath = path.join(layerPath, `${layerCaseName}.zip`)
         await exec(
-            `cd ${layerCasePath} && tar -a -c -f ${zipPath} node/*`
+            `cd ${layerCasePath} && zip ${zipPath} node/*`
         )
         await fs.rm(layerCasePath, { force: true, recursive: true })
     }
