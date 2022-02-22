@@ -2,3 +2,4 @@ cdk.out
 dist
 infra-dist
 node_modules
+data.json
