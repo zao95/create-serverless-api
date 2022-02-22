@@ -139,7 +139,7 @@ const bundle = async () => {
         }
         const zipPath = path.join(layerPath, `${layerCaseName}.zip`)
         await exec(
-            `cd ${layerCasePath} && tar.exe -a -c -f ${zipPath} node/*`
+            `cd ${layerCasePath} && tar -a -c -f ${zipPath} node/*`
         )
         await fs.rm(layerCasePath, { force: true, recursive: true })
     }
@@ -182,4 +182,6 @@ const copyForce = async (src, dest) => {
     await fs.copyFile(src, dest)
 }
 
-bundle()
+bundle().catch((e) => {
+    throw e
+})
