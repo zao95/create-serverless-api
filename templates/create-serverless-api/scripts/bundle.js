@@ -13,7 +13,7 @@ const distPath = path.join(serverlessPath, 'dist')
 const srcPath = path.join(process.cwd(), 'src')
 const tempPath = path.join(distPath, 'temp')
 const layerPath = path.join(distPath, 'layers')
-const commonModulePath = path.join(srcPath, 'modules', 'common.ts')
+const commonModulePath = path.join(srcPath, 'modules')
 
 const extractDependencies = async () => {
     const packageJsonData = await fs.readFile(
@@ -93,7 +93,8 @@ const bundle = async () => {
 
         const modulePath = path.join(lambdaTempPath, 'modules')
         await fs.mkdir(modulePath)
-        await fs.copyFile(commonModulePath, path.join(modulePath, 'common.ts'))
+
+        await copy(commonModulePath, modulePath)
 
         for (const libraryName of additionalLibrary) {
             delete commonDependencies[libraryName]
