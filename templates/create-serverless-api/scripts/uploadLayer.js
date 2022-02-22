@@ -7,10 +7,10 @@ AWS.config.credentials = credentials;
 
 const uploadLayer = async () => {
     try {
-        const layersPath = path.join(__dirname, '../.serverless/dist/layers')
+        const layersPath = path.join(process.cwd(), '.serverless', 'dist', 'layers')
 
         const { info } = await SwaggerParser.parse(
-            path.join(__dirname, '../swagger.yaml')
+            path.join(process.cwd(), 'swagger.yaml')
         )
         const Bucket = info['x-cdk-s3-bucket-name']
 
