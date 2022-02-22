@@ -9,9 +9,10 @@ import convertSwaggerToRestApiModule from '../modules/convertSwaggerToRestApi'
 import { LayerVersion, Runtime, S3Code } from '@aws-cdk/aws-lambda'
 import { SubnetType } from '@aws-cdk/aws-ec2'
 import { Bucket } from '@aws-cdk/aws-s3'
-import { changeToUppercaseFirstLetter } from '../utils/utils'
+import { camelCaseToDash, changeToUppercaseFirstLetter } from '../utils/utils'
 import { join } from 'path'
-import fs from 'fs'
+import { readFileSync } from 'fs-extra'
+import path from 'path'
 
 interface IProps extends StackProps {
     swagger: any
@@ -20,14 +21,23 @@ class CommonStack extends Stack {
     public constructor(scope: App, key: string, props: IProps) {
         super(scope, key, props)
 
+        const bucketName = camelCaseToDash(
+            JSON.parse(
+                readFileSync(
+                    path.join(process.cwd(), '/infra/data.json'),
+                    'utf-8'
+                )
+            ).bucketName
+        )
+
         const bucket = Bucket.fromBucketName(
             this,
             `${props.swagger.info.title}Bucket`,
-            props.swagger.info['x-cdk-s3-bucket-name']
+            bucketName
         )
 
         const layersByLambda = JSON.parse(
-            fs.readFileSync(join(__dirname, '../../layers.json'), {
+            readFileSync(join(__dirname, '../../layers.json'), {
                 encoding: 'utf-8',
             })
         )

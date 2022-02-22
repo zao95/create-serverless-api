@@ -22,3 +22,6 @@ export const getParameterType = (swaggerIn: string): string => {
             `요청하신 api parameter 종류인 ${swaggerIn}을 찾을 수 없습니다.`
         )
 }
+
+export const camelCaseToDash = (str: string) =>
+    str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
