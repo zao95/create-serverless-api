@@ -120,22 +120,20 @@ const bundle = async () => {
     for await (const oneCase of libraryCase) {
         const layerCaseName = jsonToHash(oneCase)
         const layerCasePath = path.join(layerPath, layerCaseName)
-        const modulesPath = path.join(layerCasePath, 'node')
-        await fs.mkdir(modulesPath, { recursive: true })
+        const nodePath = path.join(layerCasePath, 'nodejs')
+        await fs.mkdir(nodePath, { recursive: true })
 
         const useDependencies = JSON.parse(oneCase)
         for (const libraryName in useDependencies) {
             const version = useDependencies[libraryName]
             await exec(
-                `npm i --prefix ${modulesPath} ${libraryName}@${version}`
+                `npm i --prefix ${nodePath} ${libraryName}@${version}`
             )
         }
 
-        const nodePath = path.join(layerCasePath, 'node')
         const fileCnt = (await fs.readdir(nodePath)).length
 
         if (fileCnt === 0) {
-            const nodePath = path.join(layerCasePath, 'node')
             await fs.mkdir(nodePath, { recursive: true })
             await fs.writeFile(path.join(nodePath, 'blank.json'), 'blank')
         }
@@ -147,7 +145,7 @@ const bundle = async () => {
             zipCommand = 'tar.exe -a -c -f'
         }
         await exec(
-            `cd ${layerCasePath} && ${zipCommand} ${zipPath} node/*`
+            `cd ${layerCasePath} && ${zipCommand} ${zipPath} nodejs/*`
         )
         await fs.rm(layerCasePath, { force: true, recursive: true })
     }
