@@ -18,29 +18,39 @@ paths:
                     description: Returns the API health.
                     schema:
                         type: object
-    /fruit:
+    /basket:
         get:
-            x-cdk-lambda-handler: ./api/getFruit.handler
-            x-cdk-additional-library: [md5]
-            description: Take the fruit out of the basket.
+            x-cdk-lambda-handler: ./api/getBasket.handler
+            description: Check the inside of the basket..
             produces:
                 - application/json
-            parameters:
-                - in: query
-                  name: fruit
-                  required: true
-                  type: string
-                  description: The fruit you want to bring.
-                - in: query
-                  name: count
-                  type: integer
-                  description: The number you want to bring.
             responses:
                 200:
-                    description: Returns the fruit!
+                    description: Show the inside of the basket.
                     schema:
                         type: object
                 400:
-                    description: There are no more fruits in the basket than that much.
+                    description: There is no basket.
+                    schema:
+                        type: object
+    /basket/{fruit}:
+        get:
+            x-cdk-lambda-handler: ./api/getBasketFruit.handler
+            description: Check how many fruits are in this basket.
+            produces:
+                - application/json
+            parameters:
+                - in: path
+                  name: fruit
+                  required: true
+                  type: string
+                  description: Fruits that you want to check.
+            responses:
+                200:
+                    description: How many fruits are in this basket.
+                    schema:
+                        type: object
+                400:
+                    description: There is no fruit in the basket.
                     schema:
                         type: object

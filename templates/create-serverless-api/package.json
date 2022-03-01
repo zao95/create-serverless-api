@@ -10,8 +10,8 @@
         "build-server": "node ./scripts/bundle.js && babel ./.serverless/dist/temp --out-dir ./.serverless/dist/api --extensions \".ts\" --copy-files && node ./scripts/cleanUp.js",
         "deploy": "npm run build && cross-env INFRA_ENV=development node ./scripts/executeS3Stack.js deploy && cross-env INFRA_ENV=development node ./scripts/uploadLayer.js && cross-env INFRA_ENV=development cdk deploy --all --require-approval never --profile development",
         "deploy-prod": "npm run build && cross-env INFRA_ENV=production node ./scripts/executeS3Stack.js deploy && cross-env INFRA_ENV=production node ./scripts/uploadLayer.js && cross-env INFRA_ENV=production cdk deploy --all --require-approval never --profile production",
-        "destroy": "cross-env INFRA_ENV=development cdk destroy --all --force --profile development",
-        "destroy-prod": "cross-env INFRA_ENV=production cdk destroy --all --force --profile production",
+        "destroy": "cross-env INFRA_ENV=development cdk destroy --all --force --profile development && node scripts/afterDestroy.js",
+        "destroy-prod": "cross-env INFRA_ENV=production cdk destroy --all --force --profile production && node scripts/afterDestroy.js",
         "diff": "npm run build && cross-env INFRA_ENV=development node ./scripts/executeS3Stack.js diff && cross-env INFRA_ENV=development cdk diff --profile development",
         "diff-prod": "npm run build && cross-env INFRA_ENV=production node ./scripts/executeS3Stack.js diff && cross-env INFRA_ENV=production cdk diff --profile production",
         "offline": "cross-env APP_ENV=Offline ts-node ./scripts/offline.ts"

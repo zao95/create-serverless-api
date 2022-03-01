@@ -32,7 +32,6 @@ interface ILambdaProps extends Omit<FunctionProps, 'code' | 'handler'> {
 }
 
 interface IProps {
-    lambdaName: string
     apiGateway: RestApi
     swagger: any
     layersByLambda: { [key: string]: LayerVersion }
@@ -41,7 +40,7 @@ interface IProps {
 
 const convertSwaggerToRestApi = (
     scope: Construct,
-    { lambdaName, apiGateway, swagger, layersByLambda, lambdaProps }: IProps
+    { apiGateway, swagger, layersByLambda, lambdaProps }: IProps
 ) => {
     let paths = Object.keys(swagger.paths)
 
@@ -52,7 +51,7 @@ const convertSwaggerToRestApi = (
         methods.forEach((methodName) => {
             const apiData = swagger.paths[pathName][methodName]
             const lambdaId =
-                lambdaName +
+                swagger.info.title +
                 changeToUppercaseFirstLetter(methodName) +
                 (pathName === '/' ? '' : changeToUppercaseFirstLetter(pathName))
             const lambda = new Function(scope, lambdaId, {
@@ -105,6 +104,9 @@ const convertSwaggerToRestApi = (
                         integrationParameters[
                             `integration.request.${parameterType}.${parameter['name']}`
                         ] = `method.request.${parameterType}.${parameter['name']}`
+                        methodParameters[
+                            `method.request.${parameterType}.${parameter['name']}`
+                        ] = parameter.required ?? false
                         methodParameters[
                             `method.request.${parameterType}.${parameter['name']}`
                         ] = parameter.required ?? false

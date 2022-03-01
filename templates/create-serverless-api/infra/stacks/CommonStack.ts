@@ -1,9 +1,11 @@
 import { App, RemovalPolicy, Stack, StackProps } from '@aws-cdk/core'
 import {
     Cors,
+    Deployment,
     EndpointType,
     MethodLoggingLevel,
     RestApi,
+    Stage,
 } from '@aws-cdk/aws-apigateway'
 import convertSwaggerToRestApiModule from '../modules/convertSwaggerToRestApi'
 import { LayerVersion, Runtime, S3Code } from '@aws-cdk/aws-lambda'
@@ -77,6 +79,7 @@ class CommonStack extends Stack {
                     allowOrigins: Cors.ALL_ORIGINS,
                     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTION'],
                 },
+                deploy: true,
                 deployOptions: {
                     stageName: process.env.INFRA_ENV,
                     description: `stage in ${process.env.INFRA_ENV} environment`,
@@ -92,7 +95,6 @@ class CommonStack extends Stack {
             }
         )
         convertSwaggerToRestApiModule(this, {
-            lambdaName: props.swagger.info.title,
             apiGateway: apiGateway,
             swagger: props.swagger,
             layersByLambda: layersByLambda,
