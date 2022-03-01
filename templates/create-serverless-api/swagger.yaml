@@ -4,8 +4,6 @@ info:
     version: '1.0'
     title: projectFruit # Do not change it after the first deployment.
 
-# basePath: /v2
-
 paths:
     /:
         get:
@@ -52,5 +50,32 @@ paths:
                         type: object
                 400:
                     description: There is no fruit in the basket.
+                    schema:
+                        type: object
+        post:
+            x-cdk-lambda-handler: ./api/postBasketFruit.handler
+            description: Check how many fruits are in this basket.
+            produces:
+                - application/json
+            parameters:
+                - in: path
+                  name: fruit
+                  required: true
+                  type: string
+                  description: Fruits that you want to check.
+                - in: body
+                  schema:
+                      type: object
+                      properties:
+                          count:
+                              type: integer
+                              required: true
+            responses:
+                200:
+                    description: Succeeded in putting fruits in the basket.
+                    schema:
+                        type: object
+                400:
+                    description: An unknown cause error has occurred.
                     schema:
                         type: object

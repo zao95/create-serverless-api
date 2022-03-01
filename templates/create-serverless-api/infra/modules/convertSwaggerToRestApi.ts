@@ -78,6 +78,7 @@ const convertSwaggerToRestApi = (
                 parameters.forEach((parameter, idx) => {
                     const parameterType = getParameterType(parameter['in'])
                     if (parameterType === 'body') {
+                        const requiredArray = []
                         hasRequestBody = true
                         modelSchema = {}
                         const schema = parameter['schema']
@@ -94,10 +95,15 @@ const convertSwaggerToRestApi = (
                                         propertyType
                                     ],
                                 }
+                                if (
+                                    schema.properties[property].required ===
+                                    true
+                                )
+                                    requiredArray.push(property)
                             }
                         }
-                        if (!isEmpty(schema.required)) {
-                            modelSchema.required = schema.required
+                        if (requiredArray.length >= 1) {
+                            modelSchema.required = requiredArray
                         }
                     } else {
                         hasRequestParameter = true
