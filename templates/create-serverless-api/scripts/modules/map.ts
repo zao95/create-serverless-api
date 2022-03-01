@@ -8,24 +8,10 @@ const getBody = async (req: any) => {
 	return Buffer.concat(buffers).toString()
 }
 
-// const symbolToObject = (symbol: Symbol) => {
-// 	const iterable = ['a', 'b', 'c'];
-
-// 	// 이터레이터
-// 	// 이터러블의 Symbol.iterator를 프로퍼티 key로 사용한 메소드는 이터레이터를 반환한다.
-// 	const iterator = iterable[Symbol.iterator]();
-
-// 	// 이터레이터는 순회 가능한 자료 구조인 이터러블의 요소를 탐색하기 위한 포인터로서 value, done 프로퍼티를 갖는 객체를 반환하는 next() 함수를 메소드로 갖는 객체이다. 이터레이터의 next() 메소드를 통해 이터러블 객체를 순회할 수 있다.
-// 	console.log(iterator.next()); // { value: 'a', done: false }
-// 	console.log(iterator.next()); // { value: 'b', done: false }
-// 	console.log(iterator.next()); // { value: 'c', done: false }
-// 	console.log(iterator.next());
-// }
-
-export const mappingEvent = async (req: any) => {
+export const mappingLambdaEventContext = async (req: any) => {
 	const [capture, symbolHeaders] = Object.getOwnPropertySymbols(req)
 	const headers = req[symbolHeaders]
-	const { url: urlWithStage, method } = req
+	const { url: urlWithStage, method }: { method: string, [key: string]: any } = req
 	
 	if(!urlWithStage?.startsWith('/development/')){
 		throw new Error('404: stage not found')
@@ -128,16 +114,18 @@ export const mappingEvent = async (req: any) => {
 		"body": await getBody(req),
 		"isBase64Encoded": false
 	}
-	return event
-}
 
-export const context = {
-    functionName: '', // The name of the Lambda function.
-    functionVersion: '', // The version of the function.
-    invokedFunctionArn: '', // The Amazon Resource Name (ARN) that's used to invoke the function. Indicates if the invoker specified a version number or alias.
-    memoryLimitInMB: '', // The amount of memory that's allocated for the function.
-    awsRequestId: '', // The identifier of the invocation request.
-    logGroupName: '', // The log group for the function.
-    logStreamName: '', // The log stream for the function instance.
-    callbackWaitsForEmptyEventLoop: '', // Set to false to send the response right away when the callback runs, instead of waiting for the Node.js event loop to be empty. If this is false, any outstanding events continue to run during the next invocation.
+	console.log('sd: ', pathUrl)
+	const context = {
+		functionName: `${method.toLowerCase()}`, // The name of the Lambda function.
+		functionVersion: '', // The version of the function.
+		invokedFunctionArn: '', // The Amazon Resource Name (ARN) that's used to invoke the function. Indicates if the invoker specified a version number or alias.
+		memoryLimitInMB: '', // The amount of memory that's allocated for the function.
+		awsRequestId: '', // The identifier of the invocation request.
+		logGroupName: '', // The log group for the function.
+		logStreamName: '', // The log stream for the function instance.
+		callbackWaitsForEmptyEventLoop: '', // Set to false to send the response right away when the callback runs, instead of waiting for the Node.js event loop to be empty. If this is false, any outstanding events continue to run during the next invocation.
+	}
+
+	return { event, context }
 }

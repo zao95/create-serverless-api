@@ -1,7 +1,7 @@
 import SwaggerParser from '@apidevtools/swagger-parser'
 import path from 'path'
 import http from 'http'
-import { mappingEvent, context } from './modules/map'
+import { mappingLambdaEventContext } from './modules/map'
 
 const offline = async () => {
     const swaggerPath = path.join(process.cwd(), 'swagger.yaml')
@@ -16,7 +16,7 @@ const offline = async () => {
         // console.log('res: ', res)
         let response = { statusCode: 200, body: '' }
         try{
-            const event = { ...(await mappingEvent(req)) }
+            const { event, context } = { ...(await mappingLambdaEventContext(req)) }
             console.log('req2: ', event)
 
             const { resource: pathUrl, httpMethod: method } = event
