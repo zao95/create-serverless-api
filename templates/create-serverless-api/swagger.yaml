@@ -64,12 +64,13 @@ paths:
                   type: string
                   description: Fruits that you want to check.
                 - in: body
+                  name: payload
                   schema:
                       type: object
+                      required: ['count']
                       properties:
                           count:
                               type: integer
-                              required: true
             responses:
                 200:
                     description: Succeeded in putting fruits in the basket.
