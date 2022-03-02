@@ -8,7 +8,7 @@ const getBody = async (req: any) => {
 	return Buffer.concat(buffers).toString()
 }
 
-export const mappingLambdaEventContext = async (req: any) => {
+export const mappingLambdaEvent = async (req: any) => {
 	const [capture, symbolHeaders] = Object.getOwnPropertySymbols(req)
 	const headers = req[symbolHeaders]
 	const { url: urlWithStage, method }: { method: string, [key: string]: any } = req
@@ -115,9 +115,12 @@ export const mappingLambdaEventContext = async (req: any) => {
 		"isBase64Encoded": false
 	}
 
-	console.log('sd: ', pathUrl)
+	return event
+}
+
+export const mappingLambdaContext = async (resourceTree: any) => {
 	const context = {
-		functionName: `${method.toLowerCase()}`, // The name of the Lambda function.
+		// functionName: `${method.toLowerCase()}`, // The name of the Lambda function.
 		functionVersion: '', // The version of the function.
 		invokedFunctionArn: '', // The Amazon Resource Name (ARN) that's used to invoke the function. Indicates if the invoker specified a version number or alias.
 		memoryLimitInMB: '', // The amount of memory that's allocated for the function.
@@ -127,5 +130,5 @@ export const mappingLambdaEventContext = async (req: any) => {
 		callbackWaitsForEmptyEventLoop: '', // Set to false to send the response right away when the callback runs, instead of waiting for the Node.js event loop to be empty. If this is false, any outstanding events continue to run during the next invocation.
 	}
 
-	return { event, context }
+	return context
 }
