@@ -14,7 +14,7 @@
         "destroy-prod": "cross-env INFRA_ENV=production cdk destroy --all --force --profile production && node scripts/afterDestroy.js",
         "diff": "npm run build && cross-env INFRA_ENV=development node ./scripts/executeS3Stack.js diff && cross-env INFRA_ENV=development cdk diff --profile development",
         "diff-prod": "npm run build && cross-env INFRA_ENV=production node ./scripts/executeS3Stack.js diff && cross-env INFRA_ENV=production cdk diff --profile production",
-        "offline": "cross-env APP_ENV=Offline ts-node ./scripts/offline.ts"
+        "offline": "cross-env APP_ENV=Offline nodemon --watch ./**/*.ts --exec 'npx' 'ts-node' ./scripts/offline.ts"
     },
     "devDependencies": {
         "@aws-cdk/aws-apigateway": "1.134.0",
@@ -38,6 +38,7 @@
         "cors": "2.8.5",
         "cross-env": "7.0.3",
         "fs-extra": "10.0.0",
+        "nodemon": "^2.0.15",
         "prompts": "2.4.2",
         "swagger-parser": "10.0.3",
         "ts-node": "10.5.0",
