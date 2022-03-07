@@ -61,8 +61,15 @@ const uploadApiDocument = async () => {
         )
         const s3 = new AWS.S3()
 
-        const outputData = await fs.readFile(path.join(outputDataPath), 'utf-8')
-        const s3Domain = outputData.bucketRegionalDomainName
+        const outputData = await fs.readFile(outputDataPath)
+        const data = {}
+        Object.values(JSON.parse(outputData, 'utf-8')).forEach((stack) => {
+            Object.keys(stack).forEach((outputKey) => {
+                data[outputKey] = stack[outputKey]
+            })
+        })
+
+        const s3Domain = data.bucketRegionalDomainName
         const swaggerPath = `https://${s3Domain}/swagger.yaml`
         const template = await fs.readFile(path.join(templatePath), 'utf-8')
         const file = template.replace('$URL_INSERT$', swaggerPath)
