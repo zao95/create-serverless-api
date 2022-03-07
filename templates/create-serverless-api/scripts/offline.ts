@@ -15,21 +15,48 @@ const offline = async () => {
     const resourceTree = await swaggerParser.parse(swaggerPath)
 
     http.createServer(async (req, res) => {
-        // console.log('req: ', req)
-        // console.log('res: ', res)
         let response = { statusCode: 200, body: '' }
         try{
-            const event = { ...(await mappingLambdaEvent(req)) }
-            // console.log('req2: ', event)
+            const [pathUrlWithStage, queryString]: any = req.url?.split('?')
+	        const pathUrl = pathUrlWithStage?.replace('/development', '')
 
-            const { resource: pathUrl, httpMethod: method } = event
-            const urlInfo = paths[pathUrl]
-            // console.log(pathUrl)
-            if(!urlInfo){
-                throw new Error('404: url definition not found')
+            const method = req?.method || ''
+            const resourcePath = pathUrl.endsWith('/') ? `root${pathUrl}` : `root${pathUrl}/`
+            const resources = resourcePath.split('/')
+            resources.pop()
+
+            let pathParameters: {[key: string]: any} = {}
+            let pathResources = []
+            let peeker: { children: {[key: string]: any}, methods: {[key: string]: any} } = { children: resourceTree, methods: {} }
+            for (const resource of resources) {
+                if(!peeker){
+                    throw new Error('404: path not found')
+                }
+                const nowPeekerNode = peeker.children
+                const resourceKeys = Object.keys(nowPeekerNode)
+                if (resourceKeys.includes('{path}') && resourceKeys.length !== 1) {
+                    throw new Error('path parameter resource must unique in same level.')
+                }
+
+                let node =  nowPeekerNode[resource]
+                let nextResource = resource
+                if (node !== undefined) {
+                    nextResource = resource
+                    pathResources.push(nextResource)
+                } else {
+                    nextResource = '{path}'
+                    const key = nowPeekerNode[nextResource].alias
+                    pathParameters[key] = resource
+                    pathResources.push(key)
+                }
+                peeker = nowPeekerNode[nextResource]
+                
             }
+            pathResources = pathResources.map(resource => resource.replace(/\b[a-z]/, (letter: string) => letter.toUpperCase()))
+            pathResources[0] = method?.toLowerCase()
+            const functionName = pathResources.join('')
 
-            const methodInfo = urlInfo[method?.toLowerCase()]
+            const methodInfo = peeker.methods[method?.toLowerCase()]
             if(!methodInfo){
                 throw new Error('404: method definition not found')
             }
@@ -49,9 +76,10 @@ const offline = async () => {
                 throw new Error('404: module not found')
             }
             
-            const newContext = mappingLambdaContext(resourceTree)
+            const event = { ...(await mappingLambdaEvent(req, pathParameters)) }
+            const newContext = mappingLambdaContext(functionName)
+            // console.log([event, newContext])
             response = await apiModule(event, newContext)
-            // console.log(response)
             
         } catch (e: any) {
             const eStr = e.toString().replace('Error: ', '')

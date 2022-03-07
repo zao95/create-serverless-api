@@ -13,25 +13,38 @@ export const parse = async (swaggerPath: string): Promise<any> => { // method ke
 		resources.pop()
 		return { info: paths[pathKey], resources }
 	})
+
+	const { info: { title } } = swagger
+	// console.log('sdsdsdsd: ', title)
+	if (title === undefined) {
+		throw new Error('project title is undefined.')
+	}
 	
 	let resourceTree = {}
 	for (const { info, resources } of resourceInfos){
 		for (const methodKey in info){
 			const method = info[methodKey]
-			console.log(method, resources)
 
-			let treePeeker: any = resourceTree
+			let treePeeker: any = null
+			let next = resourceTree
+			let lastResource = ''
 			for (const resource of resources) {
-				const resourceKey = resource.match(/^\{.+\}$/) ? '{path}' : resource
-				if(!treePeeker[resourceKey]){
-					treePeeker[resourceKey] = { children: {}, methods: {} }
+				treePeeker = next
+				
+				let resourceKey = resource
+				if (resource.match(/^\{.+\}$/)) {
+					resourceKey = '{path}'
 				}
-				treePeeker = treePeeker[resourceKey]
+				if(!treePeeker[resourceKey]){
+					treePeeker[resourceKey] = { children: {}, methods: {}, alias: resource.replace('{', '').replace('}', '') }
+				}
+				next = treePeeker[resourceKey].children
+				lastResource = resourceKey
 			}
 
-			treePeeker[methodKey] = JSON.parse(JSON.stringify(method))
-			treePeeker[methodKey].name = 
-			`${methodKey}${
+			treePeeker[lastResource].methods[methodKey] = JSON.parse(JSON.stringify(method))
+			treePeeker[lastResource].methods[methodKey].name = 
+			`${title}${methodKey.replace(/\b[a-z]/, letter => letter.toUpperCase())}${
 				resources.slice(1, resources.length)
 				.map(str => 
 					str.replace(/\{/g, '').replace(/\}/g, '')
@@ -40,11 +53,8 @@ export const parse = async (swaggerPath: string): Promise<any> => { // method ke
 				.join('')
 			}`
 		}
-		// pathKey.endsWith('/')
-		// const resourceArray = pathKey.replace('/', 'root/').split('/')
-		// console.log('key: ', resourceArray)
 	}
-	console.log(JSON.stringify(resourceTree, null, 4))
+	// console.log(JSON.stringify(resourceTree, null, 4))
 	return resourceTree
 }
 
