@@ -8,7 +8,7 @@ const executeS3Stack = async () => {
             const cdkCommand = process.argv[2]
             const stackName = `${swagger.info.title}CreateBucketStack`
             const INFRA_ENV = process.env.INFRA_ENV
-            const command = `cdk ${cdkCommand} ${stackName} --require-approval never --profile ${INFRA_ENV}`
+            const command = `cdk ${cdkCommand} ${stackName} --require-approval never --profile ${INFRA_ENV} --outputs-file ./.serverless/s3Domain.json`
 
             const result = await exec(command)
             return result
