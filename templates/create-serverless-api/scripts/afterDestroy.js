@@ -67,7 +67,7 @@ const destroy = async () => {
     try {
         // Remove data file
         const removeData = await loadProcess('remove', remove, [
-            './infra/data.json',
+            './infra/projectData.json',
         ])
         if (!removeData) throw new Error('data 파일을 제거하지 못했습니다.')
 

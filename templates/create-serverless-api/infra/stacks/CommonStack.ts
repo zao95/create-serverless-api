@@ -26,7 +26,7 @@ class CommonStack extends Stack {
         const bucketName = camelCaseToDash(
             JSON.parse(
                 readFileSync(
-                    path.join(process.cwd(), 'infra', 'data.json'),
+                    path.join(process.cwd(), 'infra', 'projectData.json'),
                     'utf-8'
                 )
             ).bucketName
