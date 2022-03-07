@@ -3,6 +3,7 @@ const fs = require('fs/promises')
 const AWS = require('aws-sdk')
 const { readFileSync } = require('fs-extra')
 const { camelCaseToDash } = require('./utils')
+const chalk = require('chalk')
 
 const credentials = new AWS.SharedIniFileCredentials({
     profile: process.env.INFRA_ENV,
@@ -116,8 +117,7 @@ const uploadSwagger = async () => {
         const url = await loadProcess('uploadApiDocument', uploadApiDocument)
 
         console.log('upload swagger to s3 complete!')
-        console.log()
-        console.log(`Project API Document: ${url}`)
+        console.log(`${chalk.blue('Project API Document')}: ${chalk.blue(url)}`)
     } catch (e) {
         console.error(e)
         process.exit(1)
