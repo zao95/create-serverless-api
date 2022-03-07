@@ -79,8 +79,41 @@ const uploadApiDocument = async () => {
                 ContentType: 'text/html',
             })
             .promise()
+    } catch (e) {
+        throw new Error(e)
+    }
+}
 
-        return `https://${s3Domain}/index.html`
+const printResult = async () => {
+    try {
+        const outputDataPath = path.join(
+            process.cwd(),
+            '.serverless',
+            'output.json'
+        )
+
+        const outputData = await fs.readFile(path.join(outputDataPath), 'utf-8')
+
+        const data = {}
+        Object.values(JSON.parse(outputData)).forEach((stack) => {
+            Object.keys(stack).forEach((outputKey) => {
+                data[outputKey] = stack[outputKey]
+            })
+        })
+
+        const s3Domain = data.bucketRegionalDomainName
+        const apiEndpoint = data.apiEndpoint
+
+        const apiDocumentURL = `https://${s3Domain}/index.html`
+
+        const content = [
+            `${chalk.blue('Project API Document')}: ${chalk.blue(
+                apiDocumentURL
+            )}`,
+            `${chalk.blue('API Endpoint')}: ${chalk.blue(apiEndpoint)}`,
+        ]
+
+        return content
     } catch (e) {
         throw new Error(e)
     }
@@ -114,10 +147,44 @@ const loadProcess = async (name, func, params = []) => {
 const uploadSwagger = async () => {
     try {
         await loadProcess('saveSwagger', saveSwagger)
-        const url = await loadProcess('uploadApiDocument', uploadApiDocument)
+        await loadProcess('uploadApiDocument', uploadApiDocument)
+        const contents = await loadProcess('printResult', printResult)
 
-        console.log('upload swagger to s3 complete!')
-        console.log(`${chalk.blue('Project API Document')}: ${chalk.blue(url)}`)
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info('')
+        console.info(`${chalk.blue('▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒')}`)
+        console.info(`${chalk.blue('▒▒                                 ▒▒')}`)
+        console.info(`${chalk.blue('▒▒  Create Serverless API Scripts  ▒▒')}`)
+        console.info(`${chalk.blue('▒▒                                 ▒▒')}`)
+        console.info(`${chalk.blue('▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒')}`)
+        console.info('')
+        console.info(
+            `${chalk.blue('The project deployment was successfully executed.')}`
+        )
+        console.info('')
+        console.info(`${chalk.blue('Use api using the output results below.')}`)
+        console.info('')
+        for (const content of contents) {
+            console.info(content)
+        }
     } catch (e) {
         console.error(e)
         process.exit(1)

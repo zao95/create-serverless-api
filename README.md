@@ -21,7 +21,7 @@ Create Serverless API was inspired by the [create-react-app](https://github.com/
     npm deploy
     ```
 
-And Check the api endpoint output to the terminal.
+And check the API document URL and API endpoint at the terminal.
 
 You will have a fully operational api service.
 
@@ -41,6 +41,7 @@ For detail, please refer to the explanation below.
 -   Supports monitoring and logging with aws X-ray and aws CloudWatch.
 -   Babel settings are set for using typescript.
 -   Can execute local test similar to the aws lambda.
+-   Swagger api documents are automatically serviced on the web.
 
 ## Environment in Lambda Container
 

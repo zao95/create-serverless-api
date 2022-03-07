@@ -1,4 +1,4 @@
-import { App, RemovalPolicy, Stack, StackProps } from '@aws-cdk/core'
+import { App, CfnOutput, RemovalPolicy, Stack, StackProps } from '@aws-cdk/core'
 import {
     Cors,
     Deployment,
@@ -109,6 +109,12 @@ class CommonStack extends Stack {
                     subnetType: SubnetType.PUBLIC,
                 },
             },
+        })
+
+        new CfnOutput(this, 'apiEndpoint', {
+            value: apiGateway.url,
+            description: 'The api endpoint of the api gateway',
+            exportName: 'apiEndpoint',
         })
     }
 }
