@@ -38,7 +38,7 @@ const offline = async () => {
                     throw new Error('path parameter resource must unique in same level.')
                 }
 
-                let node =  nowPeekerNode[resource]
+                let node = nowPeekerNode[resource]
                 let nextResource = resource
                 if (node !== undefined) {
                     nextResource = resource
