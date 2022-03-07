@@ -40,10 +40,10 @@ const saveSwagger = async () => {
 
 const uploadApiDocument = async () => {
     try {
-        const s3DomainDataPath = path.join(
+        const outputDataPath = path.join(
             process.cwd(),
             '.serverless',
-            's3Domain.json'
+            'output.json'
         )
         const templatePath = path.join(
             process.cwd(),
@@ -61,12 +61,8 @@ const uploadApiDocument = async () => {
         )
         const s3 = new AWS.S3()
 
-        const s3DomainData = await fs.readFile(
-            path.join(s3DomainDataPath),
-            'utf-8'
-        )
-        const s3Domain = Object.values(JSON.parse(s3DomainData))[0]
-            .bucketRegionalDomainName
+        const outputData = await fs.readFile(path.join(outputDataPath), 'utf-8')
+        const s3Domain = outputData.bucketRegionalDomainName
         const swaggerPath = `https://${s3Domain}/swagger.yaml`
         const template = await fs.readFile(path.join(templatePath), 'utf-8')
         const file = template.replace('$URL_INSERT$', swaggerPath)
