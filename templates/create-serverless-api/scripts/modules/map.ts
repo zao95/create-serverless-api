@@ -8,7 +8,7 @@ const getBody = async (req: any) => {
 	return Buffer.concat(buffers).toString()
 }
 
-export const mappingLambdaEvent = async (req: any) => {
+export const mappingLambdaEvent = async (req: any, pathParameters: any) => {
 	const [capture, symbolHeaders] = Object.getOwnPropertySymbols(req)
 	const headers = req[symbolHeaders]
 	const { url: urlWithStage, method }: { method: string, [key: string]: any } = req
@@ -79,7 +79,7 @@ export const mappingLambdaEvent = async (req: any) => {
 		},
 		queryStringParameters,
 		multiValueQueryStringParameters,
-		"pathParameters": null,
+		pathParameters,
 		"stageVariables": null,
 		"requestContext": {
 			"resourceId": "2gxmpl",
@@ -118,9 +118,9 @@ export const mappingLambdaEvent = async (req: any) => {
 	return event
 }
 
-export const mappingLambdaContext = async (resourceTree: any) => {
+export const mappingLambdaContext = (functionName: string) => {
 	const context = {
-		// functionName: `${method.toLowerCase()}`, // The name of the Lambda function.
+		functionName, // The name of the Lambda function.
 		functionVersion: '', // The version of the function.
 		invokedFunctionArn: '', // The Amazon Resource Name (ARN) that's used to invoke the function. Indicates if the invoker specified a version number or alias.
 		memoryLimitInMB: '', // The amount of memory that's allocated for the function.
